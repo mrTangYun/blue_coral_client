@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
-    <StepsIndicator />
-    <Steps />
+  <div>
+    <input :value="currentCardNo" @input="updateCurrentCardNo" />
+    <div @click="chageStepIndex">下一步</div>
   </div>
 </template>
 
@@ -9,31 +9,24 @@
 // @ is an alias to /src
 import { mapState } from 'vuex'
 
-import StepsIndicator from '@/components/StepsIndicator'
-import Steps from '@/components/Steps'
-
 export default {
   name: 'Home',
-  data: function () {
-    return {
-    }
-  },
   computed: {
-    ...mapState(['currentCardNo'])
-  },
-  components: {
-    StepsIndicator,
-    Steps
+    ...mapState(['currentStepIndex', 'currentCardNo'])
   },
 
   methods: {
     updateCurrentCardNo (e) {
       this.$store.commit('updateCurrentCardNo', e.target.value)
+    },
+    chageStepIndex () {
+      this.$store.commit('chageStepIndex', 1)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
+.home {
+}
 </style>
