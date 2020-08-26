@@ -84,18 +84,5 @@ export default {
     font-size: 1em;
     color: #bd983c;
   }
-  .btn {
-    margin-top: 1em;
-    color: whitesmoke;
-    border-radius: 0.4em;
-    border: 1px solid #999999;
-    font-size: 1.24em;
-    padding: 0.58em 2em;
-    background: linear-gradient(#cacaca, #bababa);
-    transition: all 1.5s;
-    &.isValidated {
-      background: linear-gradient(#e8c343, #d5b030);
-    }
-  }
 }
 </style>

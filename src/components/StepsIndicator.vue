@@ -1,15 +1,8 @@
 <template>
   <div class="container">
     <div v-for="(item, index) in steps" :key="item" class="itemContainer">
-      <div v-if="index > 0" class="triangleOuter">
-        <div
-          :class="{
-          triangle: true,
-          isActived: index <= currentStepIndex
-      }"
-        ></div>
-      </div>
       <div
+        v-if="index > 0"
         :class="{
           circle: true,
           isActived: index <= currentStepIndex
@@ -18,6 +11,14 @@
         {{
         item
         }}
+      </div>
+      <div v-if="index > 0 && index < 3" class="triangleOuter">
+        <div
+          :class="{
+          triangle: true,
+          isActived: index <= currentStepIndex
+      }"
+        ></div>
       </div>
     </div>
   </div>
@@ -28,7 +29,7 @@ import { mapState } from 'vuex'
 export default {
   data: function () {
     return {
-      steps: ['卡号', '详情', '激活', '完成']
+      steps: ['卡号', '卡信息', '卡激活', '完成']
     }
   },
   computed: {
@@ -38,8 +39,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$acitivitedColor: rgb(118,186, 58);
+$acitivitedColor: #3c5b87;
 .container {
+  margin-top: 1.5em;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -52,17 +54,18 @@ $acitivitedColor: rgb(118,186, 58);
       width: 4em;
       height: 4em;
       border-radius: 50%;
-      border: 1px solid gray;
+      border: 2px solid #c7c7c7;
+      background: white;
       display: flex;
       justify-content: center;
       align-items: center;
       &.isActived {
-      border: 1px solid $acitivitedColor;
-        background: $acitivitedColor;
+        border: 2px solid $acitivitedColor;
       }
     }
     .triangleOuter {
       width: 1em;
+      margin-left: 0.2em;
       .triangle {
         width: 0;
         height: 0;
