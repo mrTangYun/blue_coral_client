@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <StepsIndicator />
+    <!-- <StepsIndicator /> -->
     <Steps />
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
     ...mapState(['currentCardNo'])
   },
   components: {
-    StepsIndicator,
+    // StepsIndicator,
     Steps
   },
 

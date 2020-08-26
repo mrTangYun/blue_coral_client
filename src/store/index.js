@@ -17,7 +17,7 @@ export default new Vuex.Store({
     },
     /// 更改当前卡号
     updateCurrentCardNo (state, no) {
-      state.currentCardNo = no
+      state.currentCardNo = no.toUpperCase()
     }
   },
 
