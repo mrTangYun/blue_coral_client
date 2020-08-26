@@ -14,6 +14,8 @@ html, body{
   background-image: url('/images/bg.jpg');
   background-repeat:  repeat-y;
   background-size: 100% auto;
+  padding: 0;
+  margin: 0;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -21,8 +23,9 @@ html, body{
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  min-height: 100%;
+  height: 100vh;
   font-size: 16px;
+
 }
 
 #nav {

@@ -44,10 +44,12 @@ export default {
 .pageContainer {
   display: flex;
   flex-direction: column;
+  height: 100vh;
   min-height: 100%;
   align-items: center;
+  justify-content: center;
   .mainImg {
-    margin: 2em 0 1em;
+    margin: 0 0 1em;
     height: auto;
     width: 17.4%;
   }
