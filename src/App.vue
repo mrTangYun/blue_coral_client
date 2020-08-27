@@ -98,13 +98,14 @@ body {
   padding: 0.5em 0em;
   width: 500px;
   margin: 0 auto;
+  display: flex;
+  overflow: hidden;
   input {
-    width: 500px;
+    width: 100%;
     height: 100px;
     line-height: 100px;
     font-size: 48px;
     border: 0;
-    border-radius: 15px;
     text-align: center;
     outline: none;
   }

@@ -1,25 +1,38 @@
 <template>
   <div class="container">
-    <div v-for="(item, index) in steps" :key="item" class="itemContainer">
-      <div
-        v-if="index > 0"
-        :class="{
+    <template v-if="isActivated">
+      <div class="itemContainer">
+        <div
+          :class="{
+          circle: true,
+          step1: true,
+          isActived: true
+      }"
+        >卡信息</div>
+      </div>
+    </template>
+    <template v-else>
+      <div v-for="(item, index) in steps" :key="item" class="itemContainer">
+        <div
+          v-if="index > 0"
+          :class="{
           circle: true,
           step1: index === 1,
           step2: index === 2,
           step3: index === 3,
           isActived: index <= currentStepIndex
       }"
-      >{{item}}</div>
-      <div v-if="index > 0 && index < 3" class="triangleOuter">
-        <div
-          :class="{
+        >{{item}}</div>
+        <div v-if="index > 0 && index < 3" class="triangleOuter">
+          <div
+            :class="{
           triangle: true,
           isActived: index <= currentStepIndex
       }"
-        ></div>
+          ></div>
+        </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -32,7 +45,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["currentStepIndex"]),
+    ...mapState(["currentStepIndex", "isActivated"]),
   },
 };
 </script>

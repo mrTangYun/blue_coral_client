@@ -2,13 +2,12 @@
   <div class="pageContainer">
     <StepsIndicator />
     <div class="pageContent">
-      <div>之情况</div>
-      <div>完成激活</div>
-      <div>请在此确认您的个人信息</div>
-      <div>新名</div>
-      <div>手机号</div>
-      <div>收获地址</div>
-      <div>收获地址</div>
+      <div class="txtCarno">{{currentCardNo}}</div>
+      <div class="tips0">恭喜您完成“挚情卡”激活！</div>
+      <div class="tips1">请填再次确认您的信息！</div>
+      <Step4Box1 title="核 对 您 的 姓 名" :content="name"></Step4Box1>
+      <Step4Box1 title="核 对 手 机 号 码" :content="mobile"></Step4Box1>
+      <Step4Box1 title="核 对 收 货 地 址" :content="address"></Step4Box1>
     </div>
 
     <div class="btns btns_row">
@@ -21,10 +20,20 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 import StepsIndicator from "@/components/StepsIndicator";
+import Step4Box1 from "@/components/Step4Box1";
 export default {
-  computed: {},
-
+  computed: {
+    ...mapState([
+      "zt_qhsj",
+      "name",
+      "mobile",
+      "address",
+      "imageUrl",
+      "currentCardNo",
+    ]),
+  },
   methods: {
     chageStepIndexTpPerv() {
       this.$store.commit("chageStepIndex", 2);
@@ -33,9 +42,29 @@ export default {
 
   components: {
     StepsIndicator,
+    Step4Box1,
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.txtCarno {
+  font-family: TRENDS;
+  font-size: 48px;
+  color: #c19b25;
+}
+.tips0 {
+	font-family: STLibianSC-Regular;
+	font-size: 48px;
+	font-weight: bold;
+	font-stretch: normal;
+	color: #c19b25;
+}
+.tips1 {
+	font-family: STYuanti-SC-Light;
+	font-size: 24px;
+	font-weight: bold;
+	font-stretch: normal;
+	color: #dc2123;
+}
 </style>

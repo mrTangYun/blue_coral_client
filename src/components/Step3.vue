@@ -60,7 +60,10 @@
           <div class="inputTips">请详细填写收件人地址，顺风冷链配送</div>
 
           <div>请为“挚情卡”拍照</div>
-          <div class="inputTips">请拍摄“挚情卡”正面照片，<br />如信息模糊，客服人员会向您至电核实</div>
+          <div class="inputTips">
+            请拍摄“挚情卡”正面照片，
+            <br />如信息模糊，客服人员会向您至电核实
+          </div>
         </div>
       </div>
     </div>
@@ -116,6 +119,9 @@ export default {
       if (this.validateName && this.validateMobile) {
         if (this.tabIndex === 0) {
           return !!this.zt_qhsj;
+        } else {
+          console.log("hello");
+          return this.validateAddress;
         }
       }
       return false;
@@ -151,7 +157,9 @@ export default {
       this.$store.commit("updateZt_qhsj", timeStr);
     },
     chageStepIndexToNext() {
-      this.$store.commit("chageStepIndex", 3);
+      if (this.validateNextBtn) {
+        this.$store.commit("chageStepIndex", 3);
+      }
     },
 
     chageStepIndexTpPerv() {
