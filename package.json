@@ -2,6 +2,7 @@
   "name": "blue_coral_client",
   "version": "0.1.0",
   "private": true,
+  "homepage":"https://mrTangYun.github.io/blue_coral_client",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
