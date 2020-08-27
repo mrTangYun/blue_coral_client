@@ -10,13 +10,13 @@ export default new Vuex.Store({
     /// 当前步骤索引
     currentStepIndex: 0,
     /// 当前卡号
-    currentCardNo: '9334567',
+    currentCardNo: '',
     /// 姓名
-    name: '姓名',
+    name: '',
     /// 手机号
-    mobile: '15367680311',
+    mobile: '',
     /// 收货地址
-    address: '收货地址收货地址收货地址收货地址收货地址收货地址收货地址收货地址',
+    address: '',
     /// 照片地址
     imageUrl: '',
     deliverType: 'self',

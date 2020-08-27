@@ -6,11 +6,13 @@
         本卡内含：价值
         <span class="Trends amount">{{582123238}}</span>元礼箱
       </div>
-      <div class="presents">
-        <div v-for="(item, index) in presents" :key="item + index" class="item">
-          <div class="title">{{item.title}}</div>
-          <div class="dot"></div>
-          <div class="unit">{{item.unit}}</div>
+      <div class="presentsOuter">
+        <div class="presents">
+          <div v-for="(item, index) in presents" :key="item + index" class="item">
+            <div class="title">{{item.title}}</div>
+            <div class="dot"></div>
+            <div class="unit">{{item.unit}}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -24,9 +26,7 @@
       isValidated: true
     }"
           @click="chageStepIndexTpPerv"
-        >
-          返    回
-        </div>
+        >返 回</div>
       </template>
       <template v-else>
         <div
@@ -179,37 +179,46 @@ export default {
   color: #c19b25;
   margin-bottom: 83px;
 }
-.amount{
-  color: #eb6f1c
+.amount {
+  color: #eb6f1c;
 }
-
-.presents {
+.pageContent {
+  display: flex;
+  flex-direction: column;
+}
+.presentsOuter {
   flex: 1;
-  width: 530px;
-  margin: 0 auto;
-  height: 530px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  border: solid 2px #c7c7c7;
-  padding: 24px 35px;
-  overflow-y: scroll;
-  .item {
-    margin: 15px 0;
-    display: flex;
-    flex-direction: row;
-    height: 36px;
-    font-family: STXihei;
-    font-size: 38px;
-    line-height: 36px;
-    color: #bd983c;
-    .dot {
-      flex: 1;
-      height: 1px;
-      align-self: flex-end;
-      border-bottom: 5px dotted #bd983c;
-      margin-bottom: 4px;
-      margin-left: 10px;
-      margin-right: 10px;
+  position: relative;
+  .presents {
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    height: calc(100% - 48px - 107px);
+    width: 530px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: solid 2px #c7c7c7;
+    padding: 24px 35px;
+    overflow-y: scroll;
+    .item {
+      margin: 15px 0;
+      display: flex;
+      flex-direction: row;
+      height: 36px;
+      font-family: STXihei;
+      font-size: 38px;
+      line-height: 36px;
+      color: #bd983c;
+      .dot {
+        flex: 1;
+        height: 1px;
+        align-self: flex-end;
+        border-bottom: 5px dotted #bd983c;
+        margin-bottom: 4px;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
     }
   }
 }

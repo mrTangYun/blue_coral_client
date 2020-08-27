@@ -46,7 +46,7 @@
             <div :class="{ h3: true, isActivited: zt_qhsj==='3小时' }" @click="changeZtQhsj('3小时')"></div>
             <div :class="{ huk: true, isActivited: zt_qhsj==='不确定' }" @click="changeZtQhsj('不确定')"></div>
           </div>
-          <div>温馨提示：来店自提礼箱，请务必携带此卡！</div>
+          <div class="txt3">温馨提示：来店自提礼箱，请务必携带此卡！</div>
         </div>
         <div class="tab" v-show="deliverType === 'express'">
           <div class="inputArea">
@@ -344,7 +344,13 @@ export default {
     margin-right: 39px;
   }
 }
-#photoFile{
+#photoFile {
   display: none;
+}
+.txt3 {
+  font-size: 24px;
+  font-weight: bold;
+  font-stretch: normal;
+  color: #dc2123;
 }
 </style>
