@@ -4,7 +4,7 @@
     <div class="pageContent">
       <div class="STLiBian tx1">
         本卡内含：价值
-        <span class="Trends">{{588}}</span>元礼箱
+        <span class="Trends amount">{{582123238}}</span>元礼箱
       </div>
       <div class="presents">
         <div v-for="(item, index) in presents" :key="item + index" class="item">
@@ -35,18 +35,14 @@
       isValidated: true
     }"
           @click="chageStepIndexToNext"
-        >
-          马上激活
-        </div>
+        >马上激活</div>
         <div
           :class="{
       btn: true,
       isValidated: true
     }"
           @click="chageStepIndexTpPerv"
-        >
-          以后再说
-        </div>
+        >以后再说</div>
       </template>
     </div>
   </div>
@@ -181,8 +177,14 @@ export default {
   font-weight: bold;
   font-stretch: normal;
   color: #c19b25;
+  margin-bottom: 83px;
 }
+.amount{
+  color: #eb6f1c
+}
+
 .presents {
+  flex: 1;
   width: 530px;
   margin: 0 auto;
   height: 530px;
@@ -206,6 +208,8 @@ export default {
       align-self: flex-end;
       border-bottom: 5px dotted #bd983c;
       margin-bottom: 4px;
+      margin-left: 10px;
+      margin-right: 10px;
     }
   }
 }

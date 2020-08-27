@@ -53,7 +53,7 @@ export default {
 <style lang="scss" scoped>
 $acitivitedColor: #3c5b87;
 .container {
-  margin-top: 1.5em;
+  margin: 63px auto 55px;
   display: flex;
   flex-direction: row;
   justify-content: center;

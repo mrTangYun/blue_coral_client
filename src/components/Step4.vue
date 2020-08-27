@@ -12,9 +12,9 @@
 
     <div class="btns btns_row">
       <div class="btn isValidated" @click="chageStepIndexTpPerv">
-        <img :src="require('./images/txt_syb.png')" alt="上一步" />
+        上一步
       </div>
-      <div class="btn isValidated"><img :src="require('./images/txt_wc.png')" alt="完成" /></div>
+      <div class="btn isValidated">完    成</div>
     </div>
   </div>
 </template>
@@ -57,12 +57,14 @@ export default {
 	font-size: 48px;
 	font-weight: bold;
 	font-stretch: normal;
-	color: #c19b25;
+  color: #c19b25;
+  margin: 16px auto 31px;
 }
 .tips1 {
 	font-size: 24px;
 	font-weight: bold;
 	font-stretch: normal;
 	color: #dc2123;
+  margin: 0 auto 23px;
 }
 </style>

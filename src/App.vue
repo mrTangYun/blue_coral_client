@@ -50,6 +50,9 @@ body {
 .btn {
   font-family: STLiBian;
   font-size: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   // margin-top: 1em;
   color: whitesmoke;
   border-radius: 8px;
@@ -66,7 +69,7 @@ body {
   }
 }
 .pageContainer {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -88,7 +91,7 @@ body {
   }
 
   .pageContent {
-    // flex: 1;
+    flex: 1;
     // display: flex;
     // flex-direction: column;
     // align-items: center;
@@ -116,6 +119,14 @@ body {
     border: 0;
     text-align: center;
     outline: none;
+    &::placeholder {
+      font-family: STLibian;
+      font-size: 48px;
+      font-weight: normal;
+      font-stretch: normal;
+      letter-spacing: 0px;
+      color: #c1c1c1;
+    }
   }
   .ok {
     position: absolute;

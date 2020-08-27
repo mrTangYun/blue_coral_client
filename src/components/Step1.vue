@@ -2,7 +2,12 @@
   <div class="pageContainer">
     <img class="mainImg" :src="require('./images/s1-main.png')" />
     <div class="inputArea">
-      <input :value="currentCardNo" @input="updateCurrentCardNo" placeholder="请输入卡号" />
+      <input
+        :value="currentCardNo"
+        @input="updateCurrentCardNo"
+        placeholder="请输入卡号"
+        @blur="inputBlur"
+      />
       <div class="ok" v-if="validateCardNo"></div>
     </div>
     <div class="tips">请填写“挚情卡”正面下方卡号</div>
@@ -12,9 +17,7 @@
       isValidated: validateCardNo
     }"
       @click="chageStepIndex"
-    >
-    查阅此卡
-    </div>
+    >查阅此卡</div>
   </div>
 </template>
 
@@ -38,6 +41,9 @@ export default {
     chageStepIndex() {
       this.$store.commit("chageStepIndex", 1);
     },
+    inputBlur() {
+      window.scrollTo(0, 0);
+    },
   },
 };
 </script>
@@ -55,7 +61,7 @@ export default {
     height: auto;
     width: 131px;
   }
-  
+
   .tips {
     margin: 25px auto 79px;
     font-size: 24px;

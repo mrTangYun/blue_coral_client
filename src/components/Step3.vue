@@ -9,18 +9,14 @@
           isActivited: deliverType === 'self'
         }"
           @click="changeTab('self')"
-        >
-          <img :src="require('./images/txt_ddzt.png')" />
-        </div>
+        >到店自提</div>
         <div
           :class="{
           tabBtn: true,
           isActivited: deliverType === 'express'
         }"
           @click="changeTab('express')"
-        >
-          <img :src="require('./images/txt_mfllps.png')" />
-        </div>
+        >免费冷链配送</div>
       </div>
       <div class="STLiBian tx1">完善持卡人信息</div>
       <div class="inputTips0">
@@ -28,12 +24,12 @@
         <br />蓝珊瑚鲜生郑重承诺：您的个人信息，我们绝不外泄！
       </div>
       <div class="inputArea">
-        <input :value="name" @input="changeInputName" placeholder="您的姓名" />
+        <input :value="name" @input="changeInputName" placeholder="您的姓名" @blur="inputBlur" />
         <div class="ok" v-if="validateName"></div>
       </div>
       <div class="inputTips">请填写您的真实姓名</div>
       <div class="inputArea">
-        <input :value="mobile" @input="changeInputMobile" placeholder="手机号码" />
+        <input :value="mobile" @input="changeInputMobile" placeholder="手机号码" @blur="inputBlur" />
         <div class="ok" v-if="validateMobile"></div>
       </div>
       <div class="inputTips">请填写您常用的手机号码</div>
@@ -54,12 +50,20 @@
         </div>
         <div class="tab" v-show="deliverType === 'express'">
           <div class="inputArea">
-            <input :value="address" @input="changeInputAddress" placeholder="收货地址" />
+            <input
+              :value="address"
+              @input="changeInputAddress"
+              placeholder="收货地址"
+              @blur="inputBlur"
+            />
             <div class="ok" v-if="validateAddress"></div>
           </div>
           <div class="inputTips">请详细填写收件人地址，顺风冷链配送</div>
 
-          <div>请为“挚情卡”拍照</div>
+          <div class="btnPhoto">
+            <img :src="require('./images/photo.png')" alt />
+            <span>请为“挚情卡”拍照</span>
+          </div>
           <div class="inputTips">
             请拍摄“挚情卡”正面照片，
             <br />如信息模糊，客服人员会向您至电核实
@@ -68,17 +72,13 @@
       </div>
     </div>
     <div class="btns btns_row">
-      <div class="btn isValidated" @click="chageStepIndexTpPerv">
-        <img :src="require('./images/txt_syb.png')" alt="上一步" />
-      </div>
+      <div class="btn isValidated" @click="chageStepIndexTpPerv">上一步</div>
       <div
         :class="{
         btn:true, isValidated: validateNextBtn
       }"
         @click="chageStepIndexToNext"
-      >
-        <img :src="require('./images/txt_xyb.png')" alt="下一步" />
-      </div>
+      >下一步</div>
     </div>
   </div>
 </template>
@@ -142,6 +142,9 @@ export default {
   },
 
   methods: {
+    inputBlur() {
+      window.scrollTo(0, 0);
+    },
     changeInputAddress(e) {
       this.$store.commit("updateItem", {
         key: "address",
@@ -192,6 +195,9 @@ export default {
   border-bottom: 5px solid #51709c;
   justify-content: center;
   .tabBtn {
+    font-size: 36px;
+    color: #ffffff;
+    font-family: "STLiBian";
     width: 300px;
     background: linear-gradient(#cacaca, #bababa);
     height: 80px;
@@ -229,7 +235,7 @@ export default {
   line-height: 38px;
   letter-spacing: 0px;
   color: #bd983c;
-  margin: 15px auto;
+  margin: 10px auto;
 }
 .tabs {
   // display: flex;
@@ -282,8 +288,8 @@ export default {
 .step3PageContainer {
   .inputArea {
     input {
-      height: 80px;
-      line-height: 80px;
+      height: 70px;
+      line-height: 70px;
     }
   }
 }
@@ -292,11 +298,36 @@ export default {
   font-weight: bold;
   font-stretch: normal;
   color: #c19b25;
+  margin: 38px auto 21px;
 }
 .tx2 {
   font-size: 38px;
   font-weight: bold;
   font-stretch: normal;
   color: #c19b25;
+}
+.btnPhoto {
+  margin-top: 27px;
+  font-family: STLibian;
+  font-size: 48px;
+  font-weight: normal;
+  font-stretch: normal;
+  letter-spacing: -5px;
+  color: #ffffff;
+  width: 500px;
+  height: 80px;
+  background-image: linear-gradient(#3c5b87, #3c5b87),
+    linear-gradient(#2f4f7e, #2f4f7e);
+  background-blend-mode: normal, normal;
+  border-radius: 15px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 38px;
+    height: 33px;
+    margin-right: 39px;
+  }
 }
 </style>
