@@ -13,7 +13,7 @@
     }"
       @click="chageStepIndex"
     >
-    <img :src="require('./images/txt_cyck.png')" alt="查阅此卡">
+    查阅此卡
     </div>
   </div>
 </template>

@@ -9,6 +9,7 @@
 </template>
 
 <style lang="scss">
+@import "./fonts/font.css";
 html,
 body {
   min-height: 100%;
@@ -18,6 +19,7 @@ body {
   padding: 0;
   margin: 0;
 }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -27,7 +29,12 @@ body {
   height: 100vh;
   font-size: 16px;
 }
-
+.STLiBian {
+  font-family: STLiBian;
+}
+.Trends {
+  font-family: Trends;
+}
 #nav {
   padding: 30px;
 
@@ -41,12 +48,13 @@ body {
   }
 }
 .btn {
+  font-family: STLiBian;
+  font-size: 38px;
   // margin-top: 1em;
   color: whitesmoke;
-  border-radius: 0.4em;
+  border-radius: 8px;
   min-width: 300px;
   border: 2px solid #999999;
-  font-size: 1.24em;
   padding: 27px 0;
   background: linear-gradient(#cacaca, #bababa);
   transition: all 1.5s;
@@ -66,8 +74,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-
-    &.btn_row {
+    &.btns_row {
       .btn {
         width: 300px;
         &:first-child {
@@ -79,6 +86,7 @@ body {
       }
     }
   }
+
   .pageContent {
     // flex: 1;
     // display: flex;

@@ -6,11 +6,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     /// 是否已经激活
-    isActivated: true,
+    isActivated: false,
     /// 当前步骤索引
-    currentStepIndex: 1,
+    currentStepIndex: 0,
     /// 当前卡号
-    currentCardNo: '1232245',
+    currentCardNo: '9334567',
     /// 姓名
     name: '姓名',
     /// 手机号
@@ -19,6 +19,7 @@ export default new Vuex.Store({
     address: '收货地址收货地址收货地址收货地址收货地址收货地址收货地址收货地址',
     /// 照片地址
     imageUrl: '',
+    deliverType: 'self',
     /// 自提取货时间
     zt_qhsj: ''
   },

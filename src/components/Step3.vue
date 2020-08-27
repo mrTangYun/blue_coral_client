@@ -6,23 +6,23 @@
         <div
           :class="{
           tabBtn: true,
-          isActivited: tabIndex === 0
+          isActivited: deliverType === 'self'
         }"
-          @click="changeTab(0)"
+          @click="changeTab('self')"
         >
           <img :src="require('./images/txt_ddzt.png')" />
         </div>
         <div
           :class="{
           tabBtn: true,
-          isActivited: tabIndex === 1
+          isActivited: deliverType === 'express'
         }"
-          @click="changeTab(1)"
+          @click="changeTab('express')"
         >
           <img :src="require('./images/txt_mfllps.png')" />
         </div>
       </div>
-      <div>完善持卡人信息</div>
+      <div class="STLiBian tx1">完善持卡人信息</div>
       <div class="inputTips0">
         请务必填写真实信息以绑定此卡！
         <br />蓝珊瑚鲜生郑重承诺：您的个人信息，我们绝不外泄！
@@ -38,8 +38,8 @@
       </div>
       <div class="inputTips">请填写您常用的手机号码</div>
       <div class="tabs">
-        <div class="tab" v-show="tabIndex === 0">
-          <div>为节省您取货时间，避免等待，请选择：</div>
+        <div class="tab" v-show="deliverType === 'self'">
+          <div class="STLiBian tx2">为节省您取货时间，避免等待，请选择：</div>
           <div class="hours">
             <div
               :class="{
@@ -52,7 +52,7 @@
           </div>
           <div>温馨提示：来店自提礼箱，请务必携带此卡！</div>
         </div>
-        <div class="tab" v-show="tabIndex === 1">
+        <div class="tab" v-show="deliverType === 'express'">
           <div class="inputArea">
             <input :value="address" @input="changeInputAddress" placeholder="收货地址" />
             <div class="ok" v-if="validateAddress"></div>
@@ -88,7 +88,14 @@ import { mapState, mapMutations } from "vuex";
 import StepsIndicator from "@/components/StepsIndicator";
 export default {
   computed: {
-    ...mapState(["zt_qhsj", "name", "mobile", "address", "imageUrl"]),
+    ...mapState([
+      "zt_qhsj",
+      "name",
+      "mobile",
+      "address",
+      "imageUrl",
+      "deliverType",
+    ]),
     validateName: function () {
       if (!this.name) {
         return false;
@@ -117,7 +124,8 @@ export default {
     },
     validateNextBtn: function () {
       if (this.validateName && this.validateMobile) {
-        if (this.tabIndex === 0) {
+        console.log(this.deliverType);
+        if (this.deliverType === "self") {
           return !!this.zt_qhsj;
         } else {
           console.log("hello");
@@ -129,7 +137,6 @@ export default {
   },
   data: function () {
     return {
-      tabIndex: 0,
       hour: null,
     };
   },
@@ -165,8 +172,11 @@ export default {
     chageStepIndexTpPerv() {
       this.$store.commit("chageStepIndex", 1);
     },
-    changeTab(index) {
-      this.tabIndex = index;
+    changeTab(type) {
+      this.$store.commit("updateItem", {
+        key: "deliverType",
+        value: type,
+      });
     },
   },
 
@@ -276,5 +286,17 @@ export default {
       line-height: 80px;
     }
   }
+}
+.tx1 {
+  font-size: 48px;
+  font-weight: bold;
+  font-stretch: normal;
+  color: #c19b25;
+}
+.tx2 {
+  font-size: 38px;
+  font-weight: bold;
+  font-stretch: normal;
+  color: #c19b25;
 }
 </style>

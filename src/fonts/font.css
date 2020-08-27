@@ -1,0 +1,23 @@
+/*声明 WebFont*/
+@font-face {
+    font-family: "STLiBian";
+    src: url("STLiBian.eot");
+    src: url("STLiBian.eot?#font-spider") format("embedded-opentype"),
+      url("STLiBian.woff") format("woff"),
+      url("STLiBian.ttf") format("truetype"),
+      url("STLiBian.svg") format("svg");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Trends';
+    src: url('trends.eot');
+    src:
+        url('trends.eot?#font-spider') format('embedded-opentype'),
+        url('trends.woff') format('woff'),
+        url('trends.ttf') format('truetype'),
+        url('trends.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

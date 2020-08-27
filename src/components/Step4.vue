@@ -3,7 +3,7 @@
     <StepsIndicator />
     <div class="pageContent">
       <div class="txtCarno">{{currentCardNo}}</div>
-      <div class="tips0">恭喜您完成“挚情卡”激活！</div>
+      <div class="STLiBian tips0">恭喜您完成“挚情卡”激活！</div>
       <div class="tips1">请填再次确认您的信息！</div>
       <Step4Box1 title="核 对 您 的 姓 名" :content="name"></Step4Box1>
       <Step4Box1 title="核 对 手 机 号 码" :content="mobile"></Step4Box1>
@@ -14,7 +14,7 @@
       <div class="btn isValidated" @click="chageStepIndexTpPerv">
         <img :src="require('./images/txt_syb.png')" alt="上一步" />
       </div>
-      <div class="btn isValidated">完成</div>
+      <div class="btn isValidated"><img :src="require('./images/txt_wc.png')" alt="完成" /></div>
     </div>
   </div>
 </template>
@@ -49,19 +49,17 @@ export default {
 
 <style lang="scss" scoped>
 .txtCarno {
-  font-family: TRENDS;
+  font-family: Trends;
   font-size: 48px;
   color: #c19b25;
 }
 .tips0 {
-	font-family: STLibianSC-Regular;
 	font-size: 48px;
 	font-weight: bold;
 	font-stretch: normal;
 	color: #c19b25;
 }
 .tips1 {
-	font-family: STYuanti-SC-Light;
 	font-size: 24px;
 	font-weight: bold;
 	font-stretch: normal;
