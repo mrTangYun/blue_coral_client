@@ -6,21 +6,19 @@
       <div>抵用470元现金 或588元理想</div>
       <div>588元理想包含</div>
     </div>
-    <div class="btns">
-      <div
-        :class="{
+    <div class="btns btn_row">
+      <div :class="{
       btn: true,
       isValidated: true
-    }"
-        @click="chageStepIndexToNext"
-      >马上激活</div>
-      <div
-        :class="{
+    }" @click="chageStepIndexToNext">
+        <img :src="require('./images/txt_msjh.png')" alt="马上激活" />
+      </div>
+      <div :class="{
       btn: true,
       isValidated: true
-    }"
-        @click="chageStepIndexTpPerv"
-      >以后再说</div>
+    }" @click="chageStepIndexTpPerv">
+        <img :src="require('./images/txt_yhzs.png')" alt="以后再说" />
+      </div>
     </div>
   </div>
 </template>
@@ -46,5 +44,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

@@ -11,8 +11,10 @@
       <div>收获地址</div>
     </div>
 
-    <div class="btns">
-      <div class="btn isValidated" @click="chageStepIndexTpPerv">上一步</div>
+    <div class="btns btns_row">
+      <div class="btn isValidated" @click="chageStepIndexTpPerv">
+        <img :src="require('./images/txt_syb.png')" alt="上一步" />
+      </div>
       <div class="btn isValidated">完成</div>
     </div>
   </div>

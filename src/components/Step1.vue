@@ -12,7 +12,9 @@
       isValidated: validateCardNo
     }"
       @click="chageStepIndex"
-    >查阅此卡</div>
+    >
+    <img :src="require('./images/txt_cyck.png')" alt="查阅此卡">
+    </div>
   </div>
 </template>
 
@@ -49,39 +51,14 @@ export default {
   align-items: center;
   justify-content: center;
   .mainImg {
-    margin: 0 0 1em;
+    margin: 0 0 68px;
     height: auto;
-    width: 17.4%;
+    width: 131px;
   }
-  .inputArea {
-    border-radius: 0.4em;
-    border: 3px solid #435f84;
-    background: white;
-    position: relative;
-    padding: 0.5em 0em;
-    input {
-      width: 14em;
-      font-size: 1em;
-      border: 0;
-      border-radius: 0.4em;
-      text-align: center;
-      outline: none;
-    }
-    .ok {
-      position: absolute;
-      width: 1.5em;
-      height: 1.5em;
-      background-image: url("./images/status_ok.png");
-      background-size: 100% 100%;
-      right: 0.3em;
-      top: 50%;
-      transform: translateY(-50%);
-      // z-index: -1;
-    }
-  }
+  
   .tips {
-    margin-top: 0.3em;
-    font-size: 1em;
+    margin: 25px auto 79px;
+    font-size: 24px;
     color: #bd983c;
   }
 }

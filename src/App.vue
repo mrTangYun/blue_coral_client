@@ -41,19 +41,22 @@ body {
   }
 }
 .btn {
-  margin-top: 1em;
+  // margin-top: 1em;
   color: whitesmoke;
   border-radius: 0.4em;
-  border: 1px solid #999999;
+  min-width: 300px;
+  border: 2px solid #999999;
   font-size: 1.24em;
-  padding: 0.58em 1.5em;
+  padding: 27px 0;
   background: linear-gradient(#cacaca, #bababa);
   transition: all 1.5s;
   &.isValidated {
     background: linear-gradient(#e8c343, #d5b030);
   }
+  img {
+    height: 27px;
+  }
 }
-
 .pageContainer {
   height: 100vh;
   display: flex;
@@ -63,12 +66,58 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
+
+    &.btn_row {
+      .btn {
+        width: 300px;
+        &:first-child {
+          margin-right: 11px;
+        }
+        &:last-child {
+          margin-left: 11px;
+        }
+      }
+    }
   }
-  .pageContent{
-    flex: 1;
+  .pageContent {
+    // flex: 1;
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
   }
-  .btns{
+  .btns {
     margin: 1em 0 2em;
+  }
+}
+
+.inputArea {
+  border-radius: 15px;
+  border: 5px solid #435f84;
+  background: white;
+  position: relative;
+  padding: 0.5em 0em;
+  width: 500px;
+  margin: 0 auto;
+  input {
+    width: 500px;
+    height: 100px;
+    line-height: 100px;
+    font-size: 48px;
+    border: 0;
+    border-radius: 15px;
+    text-align: center;
+    outline: none;
+  }
+  .ok {
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    background-image: url("./components/images/status_ok.png");
+    background-size: 100% 100%;
+    right: 17px;
+    top: 50%;
+    transform: translateY(-50%);
+    // z-index: -1;
   }
 }
 </style>

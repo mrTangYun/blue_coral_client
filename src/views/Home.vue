@@ -9,7 +9,6 @@
 // @ is an alias to /src
 import { mapState } from 'vuex'
 
-import StepsIndicator from '@/components/StepsIndicator'
 import Steps from '@/components/Steps'
 
 export default {
