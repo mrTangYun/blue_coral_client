@@ -7,7 +7,8 @@
       <div class="tips1">请填再次确认您的信息！</div>
       <Step4Box1 title="核 对 您 的 姓 名" :content="name"></Step4Box1>
       <Step4Box1 title="核 对 手 机 号 码" :content="mobile"></Step4Box1>
-      <Step4Box1 title="核 对 收 货 地 址" :content="address"></Step4Box1>
+      <Step4Box1 v-if="deliverType === 'express'" title="核 对 收 货 地 址" :content="address"></Step4Box1>
+      <Step4Box1 v-if="deliverType === 'self'" title="核 对 取 货 时 间" :content="zt_qhsj"></Step4Box1>
     </div>
 
     <div class="btns btns_row">
@@ -32,6 +33,7 @@ export default {
       "address",
       "imageUrl",
       "currentCardNo",
+      "deliverType"
     ]),
   },
   methods: {

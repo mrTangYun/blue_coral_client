@@ -60,10 +60,12 @@
           </div>
           <div class="inputTips">请详细填写收件人地址，顺风冷链配送</div>
 
-          <div class="btnPhoto">
+          <label class="btnPhoto" for="photoFile">
             <img :src="require('./images/photo.png')" alt />
             <span>请为“挚情卡”拍照</span>
-          </div>
+          </label>
+
+          <input id="photoFile" type="file" accept="image/*" capture />
           <div class="inputTips">
             请拍摄“挚情卡”正面照片，
             <br />如信息模糊，客服人员会向您至电核实
@@ -179,6 +181,18 @@ export default {
       this.$store.commit("updateItem", {
         key: "deliverType",
         value: type,
+      });
+    },
+    onClickTakePhoto() {
+      console.log("hello");
+      window.wx.chooseImage({
+        count: 1, // 默认9
+        sizeType: ["original", "compressed"], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
+        success: function (res) {
+          var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+          alert(localIds);
+        },
       });
     },
   },
@@ -329,5 +343,8 @@ export default {
     height: 33px;
     margin-right: 39px;
   }
+}
+#photoFile{
+  display: none;
 }
 </style>
