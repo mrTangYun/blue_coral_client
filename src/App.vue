@@ -13,7 +13,7 @@
 html,
 body {
   min-height: 100%;
-  background-image: url("./assets/images/bg.jpg");
+  background-image: url("./assets/bg.jpg");
   background-repeat: repeat-y;
   background-size: 100% auto;
   padding: 0;
