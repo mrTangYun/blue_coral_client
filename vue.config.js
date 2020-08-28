@@ -7,8 +7,8 @@ module.exports = {
         return args
       })
   },
-  outputDir: 'dist',
-  publicPath: process.env.NODE_ENV === 'production'
-    ? '/blue_coral_client/'
-    : '/'
+  outputDir: 'dist'
+  // publicPath: process.env.NODE_ENV === 'production'
+  //   ? '/blue_coral_client/'
+  //   : '/'
 }
