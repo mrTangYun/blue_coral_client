@@ -13,7 +13,12 @@
 
     <div class="btns btns_row">
       <div class="btn isValidated" @click="chageStepIndexTpPerv">上一步</div>
-      <div class="btn isValidated" @click="bindCard">完 成</div>
+      <div
+        :class="{
+          btn: true,
+          isValidated: !isLoading
+        }"
+       @click="bindCard">完 成</div>
     </div>
   </div>
 </template>
@@ -35,11 +40,19 @@ export default {
       'deliverType'
     ])
   },
+
+  data: function () {
+    return {
+      isLoading: false
+    }
+  },
   methods: {
     chageStepIndexTpPerv () {
       this.$store.commit('chageStepIndex', 2)
     },
     bindCard () {
+      if (this.isLoading) return;
+      this.isLoading = true;
       this.$apollo
         .mutate({
           mutation: gql`
@@ -87,6 +100,7 @@ export default {
           }
         })
         .then((data) => {
+          this.isLoading = false;
           this.$store.commit('updateItem', {
             key: 'cardInfo',
             value: data.data.bindInfo
@@ -98,8 +112,9 @@ export default {
           this.$store.commit('chageStepIndex', 4)
         })
         .catch((e) => {
+          this.isLoading = false;
           this.$toasted.show(e.messsage, { 
-            theme: "toasted-primary", 
+            theme: "bubble", 
             position: "top-center", 
             duration : 3000
           });

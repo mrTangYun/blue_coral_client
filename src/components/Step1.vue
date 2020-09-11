@@ -14,7 +14,7 @@
     <div
       :class="{
       btn: true,
-      isValidated: validateCardNo || isLoading
+      isValidated: validateCardNo && !isLoading
     }"
       @click="chageStepIndex"
     >查阅此卡</div>
@@ -45,7 +45,9 @@ export default {
       this.$store.commit('updateCurrentCardNo', e.target.value)
     },
     chageStepIndex () {
-      this.data.isLoading = true;
+      if (this.isLoading) return;
+      this.isLoading = true;
+      
       this.$apollo.provider.defaultClient.query({
         query: gql`
             query customer($code: String!) {
@@ -73,7 +75,7 @@ export default {
         }
       }).then(data => {
 
-        this.data.isLoading = false;
+        this.isLoading = false;
         if (data.data.getCodeInfo) {
           this.$store.commit('updateItem', { key: 'cardInfo', value: data.data.getCodeInfo })
           this.$store.commit('updateItem', { key: 'isActivated', value: data.data.getCodeInfo.status !== 'PENDING' })
@@ -81,15 +83,15 @@ export default {
         } else {
           // alert('卡号错误')
           this.$toasted.show("卡号错误", { 
-            theme: "toasted-primary", 
+            theme: "bubble", 
             position: "top-center", 
             duration : 3000
           });
         }
       }).catch(e => {
-        this.data.isLoading = false;
+        this.isLoading = false;
         this.$toasted.show(e.messsage, { 
-            theme: "toasted-primary", 
+            theme: "bubble", 
             position: "top-center", 
             duration : 3000
           });
