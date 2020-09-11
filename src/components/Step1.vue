@@ -14,10 +14,10 @@
     <div
       :class="{
       btn: true,
-      isValidated: validateCardNo
+      isValidated: validateCardNo || isLoading
     }"
       @click="chageStepIndex"
-    >查阅此卡</div>
+    >{isLoading ? '正在查询' : '查阅此卡'}</div>
   </div>
 </template>
 
@@ -34,12 +34,18 @@ export default {
       return r.test(this.currentCardNo.trim())
     }
   },
+  data: function () {
+    return {
+      isLoading: false
+    }
+  },
 
   methods: {
     updateCurrentCardNo (e) {
       this.$store.commit('updateCurrentCardNo', e.target.value)
     },
     chageStepIndex () {
+      this.data.isLoading = true;
       this.$apollo.provider.defaultClient.query({
         query: gql`
             query customer($code: String!) {
@@ -66,15 +72,28 @@ export default {
           code: this.currentCardNo.trim()
         }
       }).then(data => {
+
+        this.data.isLoading = false;
         if (data.data.getCodeInfo) {
           this.$store.commit('updateItem', { key: 'cardInfo', value: data.data.getCodeInfo })
           this.$store.commit('updateItem', { key: 'isActivated', value: data.data.getCodeInfo.status !== 'PENDING' })
           this.$store.commit('chageStepIndex', 1)
         } else {
-          alert('卡号错误')
+          // alert('卡号错误')
+          this.$toasted.show("卡号错误", { 
+            theme: "toasted-primary", 
+            position: "top-center", 
+            duration : 3000
+          });
         }
       }).catch(e => {
-        alert('卡号错误')
+        this.data.isLoading = false;
+        this.$toasted.show(e.messsage, { 
+            theme: "toasted-primary", 
+            position: "top-center", 
+            duration : 3000
+          });
+
       })
     },
     inputBlur () {

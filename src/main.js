@@ -6,6 +6,11 @@ import store from './store'
 import ApolloClient from 'apollo-boost'
 import VueApollo from 'vue-apollo'
 
+import Toasted from 'vue-toasted';
+ 
+Vue.use(Toasted)
+ 
+
 const apolloClient = new ApolloClient({
   // You should use an absolute URL here
   uri: '/api'

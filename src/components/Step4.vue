@@ -98,7 +98,11 @@ export default {
           this.$store.commit('chageStepIndex', 4)
         })
         .catch((e) => {
-          alert(e.message)
+          this.$toasted.show(e.messsage, { 
+            theme: "toasted-primary", 
+            position: "top-center", 
+            duration : 3000
+          });
         })
     }
   },
