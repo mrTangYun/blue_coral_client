@@ -8,6 +8,16 @@ module.exports = {
       })
   },
   outputDir: 'dist',
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:4000',
+        // target: 'http://www.digroup.com.cn:3015/',
+        ws: true,
+        changeOrigin: true
+      }
+    }
+  },
   publicPath: process.env.NODE_ENV === 'production'
     ? './'
     : '/'
