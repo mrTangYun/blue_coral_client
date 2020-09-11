@@ -17,7 +17,7 @@
       isValidated: validateCardNo || isLoading
     }"
       @click="chageStepIndex"
-    >{isLoading ? '正在查询' : '查阅此卡'}</div>
+    >查阅此卡</div>
   </div>
 </template>
 
