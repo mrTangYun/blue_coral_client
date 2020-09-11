@@ -12,10 +12,8 @@
     </div>
 
     <div class="btns btns_row">
-      <div class="btn isValidated" @click="chageStepIndexTpPerv">
-        上一步
-      </div>
-      <div class="btn isValidated" @click="bindCard">完    成</div>
+      <div class="btn isValidated" @click="chageStepIndexTpPerv">上一步</div>
+      <div class="btn isValidated" @click="bindCard">完 成</div>
     </div>
   </div>
 </template>
@@ -42,8 +40,9 @@ export default {
       this.$store.commit('chageStepIndex', 2)
     },
     bindCard () {
-      this.$apollo.mutate({
-        mutation: gql`
+      this.$apollo
+        .mutate({
+          mutation: gql`
             mutation bindCard(
               $code: String!
               $name: String!
@@ -78,21 +77,29 @@ export default {
               }
             }
           `,
-        variables: {
-          code: this.currentCardNo.trim(),
-          name: this.name,
-          mobile: this.mobile,
-          imageUrl: this.imageUrl,
-          address: this.address,
-          pickupTime: this.zt_qhsj
-        }
-      }).then(data => {
-        this.$store.commit('updateItem', { key: 'cardInfo', value: data.data.bindInfo })
-        this.$store.commit('updateItem', { key: 'isActivated', value: data.data.bindInfo.status !== 'PENDING' })
-      // this.$store.commit('chageStepIndex', 2)
-      }).catch(e => {
-        alert(e.message)
-      })
+          variables: {
+            code: this.currentCardNo.trim(),
+            name: this.name,
+            mobile: this.mobile,
+            imageUrl: this.deliverType === 'express' ? this.imageUrl : null,
+            address: this.deliverType === 'express' ? this.address : null,
+            pickupTime: this.deliverType === 'self' ? this.zt_qhsj : null
+          }
+        })
+        .then((data) => {
+          this.$store.commit('updateItem', {
+            key: 'cardInfo',
+            value: data.data.bindInfo
+          })
+          this.$store.commit('updateItem', {
+            key: 'isActivated',
+            value: data.data.bindInfo.status !== 'PENDING'
+          })
+          this.$store.commit('chageStepIndex', 4)
+        })
+        .catch((e) => {
+          alert(e.message)
+        })
     }
   },
 
@@ -110,17 +117,17 @@ export default {
   color: #c19b25;
 }
 .tips0 {
-	font-size: 48px;
-	font-weight: bold;
-	font-stretch: normal;
+  font-size: 48px;
+  font-weight: bold;
+  font-stretch: normal;
   color: #c19b25;
   margin: 16px auto 31px;
 }
 .tips1 {
-	font-size: 24px;
-	font-weight: bold;
-	font-stretch: normal;
-	color: #dc2123;
+  font-size: 24px;
+  font-weight: bold;
+  font-stretch: normal;
+  color: #dc2123;
   margin: 0 auto 23px;
 }
 </style>
