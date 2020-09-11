@@ -86,121 +86,121 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
-import StepsIndicator from "@/components/StepsIndicator";
+import { mapState, mapMutations } from 'vuex'
+import StepsIndicator from '@/components/StepsIndicator'
 export default {
   computed: {
     ...mapState([
-      "zt_qhsj",
-      "name",
-      "mobile",
-      "address",
-      "imageUrl",
-      "deliverType",
+      'zt_qhsj',
+      'name',
+      'mobile',
+      'address',
+      'imageUrl',
+      'deliverType'
     ]),
     validateName: function () {
       if (!this.name) {
-        return false;
+        return false
       }
-      const r = /^[\u4E00-\u9FA5]{2,4}$/;
-      return r.test(this.name);
+      const r = /^[\u4E00-\u9FA5]{2,4}$/
+      return r.test(this.name)
     },
     validateMobile: function () {
       if (!this.mobile) {
-        return false;
+        return false
       }
-      const r = /^1\d{10}$/;
-      return r.test(this.mobile);
+      const r = /^1\d{10}$/
+      return r.test(this.mobile)
     },
     validateAddress: function () {
       if (!this.address) {
-        return false;
+        return false
       }
-      return true;
+      return true
     },
     validateImageUrl: function () {
       if (!this.imageUrl) {
-        return false;
+        return false
       }
-      return true;
+      return true
     },
     validateNextBtn: function () {
       if (this.validateName && this.validateMobile) {
-        console.log(this.deliverType);
-        if (this.deliverType === "self") {
-          return !!this.zt_qhsj;
+        console.log(this.deliverType)
+        if (this.deliverType === 'self') {
+          return !!this.zt_qhsj
         } else {
-          console.log("hello");
-          return this.validateAddress;
+          console.log('hello')
+          return this.validateAddress
         }
       }
-      return false;
-    },
+      return false
+    }
   },
   data: function () {
     return {
-      hour: null,
-    };
+      hour: null
+    }
   },
 
   methods: {
-    inputBlur() {
-      window.scrollTo(0, 0);
+    inputBlur () {
+      window.scrollTo(0, 0)
     },
-    changeInputAddress(e) {
-      this.$store.commit("updateItem", {
-        key: "address",
-        value: e.target.value,
-      });
+    changeInputAddress (e) {
+      this.$store.commit('updateItem', {
+        key: 'address',
+        value: e.target.value
+      })
     },
-    changeInputName(e) {
-      this.$store.commit("updateItem", {
-        key: "name",
-        value: e.target.value,
-      });
+    changeInputName (e) {
+      this.$store.commit('updateItem', {
+        key: 'name',
+        value: e.target.value
+      })
     },
-    changeInputMobile(e) {
-      this.$store.commit("updateItem", {
-        key: "mobile",
-        value: e.target.value,
-      });
+    changeInputMobile (e) {
+      this.$store.commit('updateItem', {
+        key: 'mobile',
+        value: e.target.value
+      })
     },
-    changeZtQhsj(timeStr) {
-      this.$store.commit("updateZt_qhsj", timeStr);
+    changeZtQhsj (timeStr) {
+      this.$store.commit('updateZt_qhsj', timeStr)
     },
-    chageStepIndexToNext() {
+    chageStepIndexToNext () {
       if (this.validateNextBtn) {
-        this.$store.commit("chageStepIndex", 3);
+        this.$store.commit('chageStepIndex', 3)
       }
     },
 
-    chageStepIndexTpPerv() {
-      this.$store.commit("chageStepIndex", 1);
+    chageStepIndexTpPerv () {
+      this.$store.commit('chageStepIndex', 1)
     },
-    changeTab(type) {
-      this.$store.commit("updateItem", {
-        key: "deliverType",
-        value: type,
-      });
+    changeTab (type) {
+      this.$store.commit('updateItem', {
+        key: 'deliverType',
+        value: type
+      })
     },
-    onClickTakePhoto() {
-      console.log("hello");
+    onClickTakePhoto () {
+      console.log('hello')
       window.wx.chooseImage({
         count: 1, // 默认9
-        sizeType: ["original", "compressed"], // 可以指定是原图还是压缩图，默认二者都有
-        sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
+        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
         success: function (res) {
-          var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-          alert(localIds);
-        },
-      });
-    },
+          var localIds = res.localIds // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+          alert(localIds)
+        }
+      })
+    }
   },
 
   components: {
-    StepsIndicator,
-  },
-};
+    StepsIndicator
+  }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -2,9 +2,9 @@
   <div class="pageContainer">
     <StepsIndicator />
     <div class="pageContent">
-      <div class="STLiBian tx1">
+      <div class="STLiBian tx1" v-if="cardInfo.giftPackage.isShowAmount">
         本卡内含：价值
-        <span class="Trends amount">{{582123238}}</span>元礼箱
+        <span class="Trends amount">{{cardInfo.giftPackage.amount}}</span>元礼箱
       </div>
       <div class="presentsOuter">
         <div class="presents">
@@ -49,126 +49,32 @@
 </template>
 
 <script>
-import StepsIndicator from "@/components/StepsIndicator";
-import { mapState } from "vuex";
+import StepsIndicator from '@/components/StepsIndicator'
+import { mapState } from 'vuex'
 export default {
   computed: {
-    ...mapState(["isActivated"]),
-  },
-  data: function () {
-    return {
-      presents: [
-        {
-          title: "8头鲍鱼",
-          unit: "8只",
-        },
-        {
-          title: "渤海湾野生大对虾.",
-          unit: "8只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "8只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "18只",
-        },
-        {
-          title: "8头鲍鱼8头鲍鱼",
-          unit: "28只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "8只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "8只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "8只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "8只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "18只",
-        },
-        {
-          title: "8头鲍鱼8头鲍鱼",
-          unit: "28只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "8只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "8只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "8只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "8只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "18只",
-        },
-        {
-          title: "8头鲍鱼8头鲍鱼",
-          unit: "28只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "8只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "8只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "8只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "8只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "18只",
-        },
-        {
-          title: "8头鲍鱼8头鲍鱼",
-          unit: "28只",
-        },
-        {
-          title: "8头鲍鱼",
-          unit: "8只",
-        },
-      ],
-    };
+    ...mapState(['isActivated', 'cardInfo']),
+    presents: function () {
+      return this.cardInfo.giftPackage.Commdities.map(
+        ({ detail: { title }, count }) => ({
+          title,
+          unit: count
+        })
+      )
+    }
   },
   methods: {
-    chageStepIndexToNext() {
-      this.$store.commit("chageStepIndex", 2);
+    chageStepIndexToNext () {
+      this.$store.commit('chageStepIndex', 2)
     },
-    chageStepIndexTpPerv() {
-      this.$store.commit("chageStepIndex", 0);
-    },
+    chageStepIndexTpPerv () {
+      this.$store.commit('chageStepIndex', 0)
+    }
   },
   components: {
-    StepsIndicator,
-  },
-};
+    StepsIndicator
+  }
+}
 </script>
 
 <style lang="scss" scoped>

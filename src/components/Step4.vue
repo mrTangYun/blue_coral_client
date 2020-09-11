@@ -15,38 +15,92 @@
       <div class="btn isValidated" @click="chageStepIndexTpPerv">
         上一步
       </div>
-      <div class="btn isValidated">完    成</div>
+      <div class="btn isValidated" @click="bindCard">完    成</div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
-import StepsIndicator from "@/components/StepsIndicator";
-import Step4Box1 from "@/components/Step4Box1";
+import { mapState, mapMutations } from 'vuex'
+import StepsIndicator from '@/components/StepsIndicator'
+import Step4Box1 from '@/components/Step4Box1'
+import gql from 'graphql-tag'
 export default {
   computed: {
     ...mapState([
-      "zt_qhsj",
-      "name",
-      "mobile",
-      "address",
-      "imageUrl",
-      "currentCardNo",
-      "deliverType"
-    ]),
+      'zt_qhsj',
+      'name',
+      'mobile',
+      'address',
+      'imageUrl',
+      'currentCardNo',
+      'deliverType'
+    ])
   },
   methods: {
-    chageStepIndexTpPerv() {
-      this.$store.commit("chageStepIndex", 2);
+    chageStepIndexTpPerv () {
+      this.$store.commit('chageStepIndex', 2)
     },
+    bindCard () {
+      this.$apollo.mutate({
+        mutation: gql`
+            mutation bindCard(
+              $code: String!
+              $name: String!
+              $mobile: String!
+              $imageUrl: String
+              $address: String
+              $pickupTime: String
+            ) {
+              bindInfo(
+                code: $code
+                name: $name
+                mobile: $mobile
+                imageUrl: $imageUrl
+                address: $address
+                pickupTime: $pickupTime
+              ) {
+                id
+                status
+                giftPackage {
+                  id
+                  title
+                  amount
+                  isShowAmount
+                  Commdities {
+                    detail {
+                      id
+                      title
+                    }
+                    count
+                  }
+                }
+              }
+            }
+          `,
+        variables: {
+          code: this.currentCardNo.trim(),
+          name: this.name,
+          mobile: this.mobile,
+          imageUrl: this.imageUrl,
+          address: this.address,
+          pickupTime: this.zt_qhsj
+        }
+      }).then(data => {
+        this.$store.commit('updateItem', { key: 'cardInfo', value: data.data.bindInfo })
+        this.$store.commit('updateItem', { key: 'isActivated', value: data.data.bindInfo.status !== 'PENDING' })
+      // this.$store.commit('chageStepIndex', 2)
+      }).catch(e => {
+        alert(e.message)
+      })
+    }
   },
 
   components: {
     StepsIndicator,
-    Step4Box1,
-  },
-};
+    Step4Box1
+  }
+}
 </script>
 
 <style lang="scss" scoped>

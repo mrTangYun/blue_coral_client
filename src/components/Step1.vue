@@ -23,29 +23,63 @@
 
 <script>
 // @ is an alias to /src
-import { mapState } from "vuex";
+import { mapState } from 'vuex'
+import gql from 'graphql-tag'
 
 export default {
   computed: {
-    ...mapState(["currentStepIndex", "currentCardNo"]),
+    ...mapState(['currentStepIndex', 'currentCardNo']),
     validateCardNo: function () {
-      const r = /^[a-zA-Z0-9]{7}$/;
-      return r.test(this.currentCardNo.trim());
-    },
+      const r = /^[a-zA-Z0-9]{7}$/
+      return r.test(this.currentCardNo.trim())
+    }
   },
 
   methods: {
-    updateCurrentCardNo(e) {
-      this.$store.commit("updateCurrentCardNo", e.target.value);
+    updateCurrentCardNo (e) {
+      this.$store.commit('updateCurrentCardNo', e.target.value)
     },
-    chageStepIndex() {
-      this.$store.commit("chageStepIndex", 1);
+    chageStepIndex () {
+      this.$apollo.provider.defaultClient.query({
+        query: gql`
+            query customer($code: String!) {
+              getCodeInfo(code: $code) {
+                id
+                status
+                giftPackage {
+                  id
+                  title
+                  amount
+                  isShowAmount
+                  Commdities {
+                    detail {
+                      id
+                      title
+                    }
+                    count
+                  }
+                }
+              }
+            }
+          `,
+        variables: {
+          code: this.currentCardNo.trim()
+        }
+      }).then(data => {
+        if (data.data.getCodeInfo) {
+          this.$store.commit('updateItem', { key: 'cardInfo', value: data.data.getCodeInfo })
+          this.$store.commit('updateItem', { key: 'isActivated', value: data.data.getCodeInfo.status !== 'PENDING' })
+          this.$store.commit('chageStepIndex', 1)
+        }
+      }).catch(e => {
+
+      })
     },
-    inputBlur() {
-      window.scrollTo(0, 0);
-    },
-  },
-};
+    inputBlur () {
+      window.scrollTo(0, 0)
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

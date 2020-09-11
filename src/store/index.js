@@ -21,7 +21,8 @@ export default new Vuex.Store({
     imageUrl: '',
     deliverType: 'self',
     /// 自提取货时间
-    zt_qhsj: ''
+    zt_qhsj: '',
+    cardInfo: null
   },
   mutations: {
     /// 更改当前步骤索引
