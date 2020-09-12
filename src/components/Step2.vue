@@ -56,9 +56,9 @@ export default {
     ...mapState(['isActivated', 'cardInfo']),
     presents: function () {
       return this.cardInfo.giftPackage.Commdities.map(
-        ({ detail: { title }, count }) => ({
+        ({ detail: { title }, count, unit }) => ({
           title,
-          unit: count
+          unit: count + unit
         })
       )
     }

@@ -74,19 +74,6 @@ export default {
               ) {
                 id
                 status
-                giftPackage {
-                  id
-                  title
-                  amount
-                  isShowAmount
-                  Commdities {
-                    detail {
-                      id
-                      title
-                    }
-                    count
-                  }
-                }
               }
             }
           `,
