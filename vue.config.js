@@ -12,6 +12,7 @@ module.exports = {
     proxy: {
       '/api': {
         target: 'http://localhost:4000',
+        // target: 'http://blue_coral.mrtangyun.com/api',
         // target: 'http://www.digroup.com.cn:3015/',
         ws: true,
         changeOrigin: true

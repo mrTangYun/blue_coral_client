@@ -8,7 +8,7 @@
         placeholder="请输入卡号"
         @blur="inputBlur"
       />
-      <div class="ok" v-if="validateCardNo"></div>
+      <!-- <div class="ok" v-if="validateCardNo"></div> -->
     </div>
     <div class="tips">请填写“挚情卡”正面下方卡号</div>
     <div
