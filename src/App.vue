@@ -110,7 +110,7 @@ body {
   width: 500px;
   margin: 0 auto;
   display: flex;
-  overflow: hidden;
+  // overflow: hidden;
   input {
     width: 100%;
     height: 100px;
