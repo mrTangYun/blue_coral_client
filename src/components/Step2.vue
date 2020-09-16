@@ -2,9 +2,11 @@
   <div class="pageContainer">
     <StepsIndicator />
     <div class="pageContent">
-      <div class="STLiBian tx1" v-if="cardInfo.giftPackage.isShowAmount">
-        本卡内含：价值
-        <span class="Trends amount">{{cardInfo.giftPackage.amount}}</span>元礼箱
+      <div class="STLiBian tx1">
+        本卡内含：
+        <template  v-if="cardInfo.giftPackage.isShowAmount">价值
+          <span class="Trends amount">{{cardInfo.giftPackage.amount}}</span>元礼箱
+        </template>
       </div>
       <div class="presentsOuter">
         <div class="presents">
