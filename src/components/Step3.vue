@@ -5,71 +5,123 @@
       <div class="tabsBtns">
         <div
           :class="{
-          tabBtn: true,
-          isActivited: deliverType === 'self'
-        }"
+            tabBtn: true,
+            isActivited: deliverType === 'self',
+          }"
           @click="changeTab('self')"
-        >到店自提</div>
+        >
+          到店自提
+        </div>
         <div
           :class="{
-          tabBtn: true,
-          isActivited: deliverType === 'express'
-        }"
+            tabBtn: true,
+            isActivited: deliverType === 'express',
+          }"
           @click="changeTab('express')"
-        >免费冷链配送</div>
+        >
+          免费冷链配送
+        </div>
       </div>
       <div class="STLiBian tx1">完善持卡人信息</div>
       <div class="inputTips0">
         请务必填写真实信息以绑定此卡！
         <br />蓝珊瑚鲜生郑重承诺：您的个人信息，我们绝不外泄！
       </div>
-      <div class="inputArea">
-        <input :value="name" @input="changeInputName" placeholder="您的姓名" @blur="inputBlur" />
+      <div
+        :class="{
+          inputArea: true,
+          styleSelf: deliverType === 'self',
+        }"
+      >
+        <input
+          :value="name"
+          @input="changeInputName"
+          :placeholder="
+            deliverType === 'express' ? '您的姓名' : '请填写您的真实姓名'
+          "
+          @blur="inputBlur"
+        />
         <div class="ok" v-if="validateName"></div>
       </div>
-      <div class="inputTips">请填写您的真实姓名</div>
-      <div class="inputArea">
-        <input :value="mobile" @input="changeInputMobile" placeholder="手机号码" @blur="inputBlur" />
+      <div class="inputTips" v-show="deliverType !== 'self'">
+        请填写您的真实姓名
+      </div>
+      <div
+        :class="{
+          inputArea: true,
+          styleSelf: deliverType === 'self',
+        }"
+      >
+        <input
+          :value="mobile"
+          @input="changeInputMobile"
+          :placeholder="
+            deliverType === 'express' ? '手机号码' : '请填写您常用的手机号码'
+          "
+          @blur="inputBlur"
+        />
         <div class="ok" v-if="validateMobile"></div>
       </div>
-      <div class="inputTips">请填写您常用的手机号码</div>
+      <div class="inputTips" v-show="deliverType !== 'self'">
+        请填写您常用的手机号码
+      </div>
+      <div class="tab" v-show="deliverType === 'express'">
+        <div class="inputArea">
+          <input
+            :value="address"
+            @input="changeInputAddress"
+            placeholder="收货地址"
+            @blur="inputBlur"
+          />
+          <div class="ok" v-if="validateAddress"></div>
+        </div>
+        <div class="inputTips">请详细填写收件人地址，顺风冷链配送</div>
+      </div>
+      <div
+        :class="{
+          inputFileArea: true,
+          styleSelf: deliverType === 'self',
+        }"
+      >
+        <label class="btnPhoto" for="photoFile">
+          <img :src="require('./images/photo.png')" alt />
+          <span>请为“挚情卡”拍照</span>
+        </label>
+
+        <input
+          id="photoFile"
+          type="file"
+          accept="image/*"
+          capture
+          @change="onClickTakePhoto"
+        />
+        <div class="inputTips">请拍摄“挚情卡”正面照片</div>
+      </div>
       <div class="tabs">
         <div class="tab" v-show="deliverType === 'self'">
           <div class="STLiBian tx2">为节省您取货时间，避免等待，请选择：</div>
           <div class="hours">
             <div
               :class="{
-              h1: true, isActivited: zt_qhsj==='1小时' }"
+                h1: true,
+                isActivited: zt_qhsj === '1小时',
+              }"
               @click="changeZtQhsj('1小时')"
             ></div>
-            <div :class="{ h2: true, isActivited: zt_qhsj==='2小时' }" @click="changeZtQhsj('2小时')"></div>
-            <div :class="{ h3: true, isActivited: zt_qhsj==='3小时' }" @click="changeZtQhsj('3小时')"></div>
-            <div :class="{ huk: true, isActivited: zt_qhsj==='不确定' }" @click="changeZtQhsj('不确定')"></div>
+            <div
+              :class="{ h2: true, isActivited: zt_qhsj === '2小时' }"
+              @click="changeZtQhsj('2小时')"
+            ></div>
+            <div
+              :class="{ h3: true, isActivited: zt_qhsj === '3小时' }"
+              @click="changeZtQhsj('3小时')"
+            ></div>
+            <div
+              :class="{ huk: true, isActivited: zt_qhsj === '不确定' }"
+              @click="changeZtQhsj('不确定')"
+            ></div>
           </div>
           <div class="txt3">温馨提示：来店自提礼箱，请务必携带此卡！</div>
-        </div>
-        <div class="tab" v-show="deliverType === 'express'">
-          <div class="inputArea">
-            <input
-              :value="address"
-              @input="changeInputAddress"
-              placeholder="收货地址"
-              @blur="inputBlur"
-            />
-            <div class="ok" v-if="validateAddress"></div>
-          </div>
-          <div class="inputTips">请详细填写收件人地址，顺风冷链配送</div>
-
-          <label class="btnPhoto" for="photoFile">
-            <img :src="require('./images/photo.png')" alt />
-            <span>请为“挚情卡”拍照</span>
-          </label>
-
-          <input id="photoFile" type="file" accept="image/*" capture @change="onClickTakePhoto" />
-          <div class="inputTips">
-            请拍摄“挚情卡”正面照片，
-            <br />如信息模糊，客服人员会向您至电核实
-          </div>
         </div>
       </div>
     </div>
@@ -77,10 +129,13 @@
       <div class="btn isValidated" @click="chageStepIndexTpPerv">上一步</div>
       <div
         :class="{
-        btn:true, isValidated: validateNextBtn
-      }"
+          btn: true,
+          isValidated: validateNextBtn,
+        }"
         @click="chageStepIndexToNext"
-      >下一步</div>
+      >
+        下一步
+      </div>
     </div>
   </div>
 </template>
@@ -120,13 +175,11 @@ export default {
       return true;
     },
     validateNextBtn: function () {
-      if (this.validateName && this.validateMobile) {
+      if (this.validateName && this.validateMobile && this.fileKey) {
         if (this.deliverType === "self") {
           return !!this.zt_qhsj;
         } else {
-          if (this.fileKey) {
-            return this.validateAddress;
-          }
+          return this.validateAddress;
         }
       }
       return false;
@@ -302,9 +355,24 @@ export default {
 }
 .step3PageContainer {
   .inputArea {
+    &.styleSelf {
+      margin: 15px auto;
+      input {
+        &::placeholder {
+          font-family: '微软雅黑', Avenir, Helvetica, Arial, sans-serif;
+          font-size: 35px;
+        }
+      }
+    }
     input {
       height: 70px;
       line-height: 70px;
+      
+    }
+  }
+  .inputFileArea {
+    &.styleSelf {
+      margin: 15px auto;
     }
   }
 }

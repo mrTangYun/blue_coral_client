@@ -81,7 +81,7 @@ export default {
             code: this.currentCardNo.trim(),
             name: this.name,
             mobile: this.mobile,
-            imageUrl: this.deliverType === 'express' ? this.fileKey : null,
+            imageUrl: this.fileKey,
             address: this.deliverType === 'express' ? this.address : null,
             pickupTime: this.deliverType === 'self' ? this.zt_qhsj : null
           }
