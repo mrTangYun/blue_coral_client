@@ -54,6 +54,10 @@ export default {
               getCodeInfo(code: $code) {
                 id
                 status
+                express {
+                  companyName
+                  expressNo
+                }
                 giftPackage {
                   id
                   title
