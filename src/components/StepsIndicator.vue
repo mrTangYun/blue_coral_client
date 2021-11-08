@@ -41,7 +41,7 @@ import { mapState } from "vuex";
 export default {
   data: function () {
     return {
-      steps: ["卡号", "卡信息", "卡激活", "完成"],
+      steps: ["卡号", "卡内详情", "完善信息", "完成", "配送信息"],
     };
   },
   computed: {

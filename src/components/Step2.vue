@@ -29,6 +29,13 @@
     }"
           @click="chageStepIndexTpPerv"
         >返 回</div>
+        <div
+          :class="{
+      btn: true,
+      isValidated: true
+    }"
+          @click="clickCheckExpressHandler"
+        >配送单号查询</div>
       </template>
       <template v-else>
         <div
@@ -71,6 +78,9 @@ export default {
     },
     chageStepIndexTpPerv () {
       this.$store.commit('chageStepIndex', 0)
+    },
+    clickCheckExpressHandler () {
+      this.$store.commit('chageStepIndex', 6)
     }
   },
   components: {
