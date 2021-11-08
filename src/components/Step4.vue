@@ -9,7 +9,7 @@
         <div class="STLiBian title">收货人</div>
         <div class="value">{{ name }}</div>
         <div class="STLiBian title">收货电话</div>
-        <div class="AvantGardeITCbyBT value">{{ mobile }}</div>
+        <div class="AvantGardeITCbyBT value">{{ mobile.replace(/(?=(\d{4})+$)/g, ' ') }}</div>
         <template v-if="deliverType === 'express'">
           <div class="STLiBian title">收货地址</div>
           <div class="value">{{ address }}</div>
