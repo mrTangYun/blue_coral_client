@@ -5,7 +5,7 @@
       <div class="STLiBian tx1">
         本卡内含：
         <template  v-if="cardInfo.giftPackage.isShowAmount">价值
-          <span class="Trends amount">{{cardInfo.giftPackage.amount}}</span>元礼箱
+          <span class="AvantGardeITCbyBT amount">{{cardInfo.giftPackage.amount}}</span>元礼箱
         </template>
       </div>
       <div class="presentsOuter">
@@ -89,6 +89,7 @@ export default {
 }
 .amount {
   color: #eb6f1c;
+  font-size: 70px;
 }
 .pageContent {
   display: flex;

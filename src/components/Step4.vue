@@ -118,7 +118,7 @@ export default {
 
 <style lang="scss" scoped>
 .txtCarno {
-  font-family: Trends;
+  font-family: AvantGardeITCbyBT;
   font-size: 48px;
   color: #c19b25;
 }

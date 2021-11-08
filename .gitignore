@@ -2,6 +2,7 @@
 node_modules
 /dist
 /其它
+/docs
 
 
 # local env files

@@ -10,7 +10,7 @@
       />
       <!-- <div class="ok" v-if="validateCardNo"></div> -->
     </div>
-    <div class="tips">请填写“挚情卡”正面下方卡号</div>
+    <div class="STLiBian tips">请填写“挚情卡”正面下方卡号</div>
     <div
       :class="{
       btn: true,
@@ -122,7 +122,7 @@ export default {
 
   .tips {
     margin: 25px auto 79px;
-    font-size: 24px;
+    font-size: 36px;
     color: #bd983c;
   }
 }
