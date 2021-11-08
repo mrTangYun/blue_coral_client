@@ -55,9 +55,11 @@ export default {
                 id
                 status
                 express {
+                  companyId
                   companyName
                   expressNo
                 }
+                getPresentWay
                 giftPackage {
                   id
                   title

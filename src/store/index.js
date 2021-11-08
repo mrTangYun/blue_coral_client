@@ -21,7 +21,7 @@ export default new Vuex.Store({
     mobile: '',
     /// 收货地址
     address: '',
-    deliverType: 'self',
+    deliverType: 'express',
     /// 照片地址
     fileKey: null,
     cardInfo: null

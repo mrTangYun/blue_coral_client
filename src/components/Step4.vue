@@ -90,7 +90,6 @@ export default {
               $mobile: String!
               $imageUrl: String
               $address: String
-              $pickupTime: String
             ) {
               bindInfo(
                 code: $code
@@ -98,10 +97,15 @@ export default {
                 mobile: $mobile
                 imageUrl: $imageUrl
                 address: $address
-                pickupTime: $pickupTime
               ) {
                 id
                 status
+                getPresentWay
+                express {
+                  companyId
+                  companyName
+                  expressNo
+                }
               }
             }
           `,

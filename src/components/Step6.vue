@@ -1,8 +1,11 @@
 <template>
   <div class="pageContainer">
     <StepsIndicator />
-    <div class="pageContent">
-      <div class="presentsOuter presentsOuterA STLiBian" v-if="!express">
+    <div class="pageContent" v-if="cardInfo.getPresentWay === 'EXPRESS'">
+      <div
+        class="presentsOuter presentsOuterA STLiBian"
+        v-if="!cardInfo.express"
+      >
         <div class="t1a">
           未发货，请稍等！
         </div>
@@ -15,16 +18,14 @@
           发货后可在此查询配送单号
         </div>
       </div>
-      <div class="presentsOuter STLiBian" v-if="express">
+      <div class="presentsOuter STLiBian" v-if="cardInfo.express">
         <div class="t1">
           冷链物流单号
         </div>
         <div class="AvantGardeITCbyBT t2">
-          12345678901234567890
+          {{ cardInfo.express.expressNo }}
         </div>
-        <div class="t3">
-          本次配送：顺丰速运
-        </div>
+        <div class="t3">本次配送：{{ cardInfo.express.companyName }}</div>
         <div class="t4" @click="copyHandler">
           点我复制单号
         </div>
@@ -57,50 +58,70 @@
 </template>
 
 <script>
-import StepsIndicator from '@/components/StepsIndicator'
-import { mapState } from 'vuex'
+import StepsIndicator from "@/components/StepsIndicator";
+import { mapState } from "vuex";
 export default {
-  data: function () {
+  data: function() {
     return {
       express: null
-    }
+    };
   },
   computed: {
-    ...mapState(['isActivated'])
+    ...mapState(["isActivated", "cardInfo"])
   },
   methods: {
-    copy (data) {
-      const url = data
-      const oInput = document.createElement('input')
-      oInput.value = url
-      document.body.appendChild(oInput)
-      oInput.select() // 选择对象;
-      document.execCommand('Copy') // 执行浏览器复制命令
-      this.$toasted.show('复制成功', {
-        theme: 'bubble',
-        position: 'top-center',
+    copy(data) {
+      const url = data;
+      const oInput = document.createElement("input");
+      oInput.value = url;
+      document.body.appendChild(oInput);
+      oInput.select(); // 选择对象;
+      document.execCommand("Copy"); // 执行浏览器复制命令
+      this.$toasted.show("复制成功", {
+        theme: "bubble",
+        position: "top-center",
         duration: 3000
-      })
-      oInput.remove()
+      });
+      oInput.remove();
     },
-    copyHandler () {
-      this.copy('hello')
+    copyHandler() {
+      this.copy(this.cardInfo.express.expressNo);
     },
-    callPhone () {
-      window.location.href = 'tel:12315'
+    callPhone() {
+      let url;
+      if (this.cardInfo.express.companyId === "1") {
+        url = "tel:950616";
+      } else if (this.cardInfo.express.companyId === "2") {
+        url = "tel:95338";
+      }
+      if (url) {
+        window.location.href = url;
+      }
     },
-    gotoWeb () {
-      window.location.href = 'tel:12315'
+    gotoWeb() {
+      let url;
+      if (this.cardInfo.express.companyId === "1") {
+        url =
+          "https://www.jdl.cn/order/search?waybillCodes=" +
+          this.cardInfo.express.expressNo;
+      } else if (this.cardInfo.express.companyId === "2") {
+        url =
+          "https://www.sf-express.com/cn/sc/dynamic_function/waybill/#search/bill-number/" +
+          this.cardInfo.express.expressNo;
+      }
+      if (url) {
+        window.location.href = url;
+      }
     },
-    chageStepIndexTpPerv () {
-      this.$store.commit('chageStepIndex', 1)
-      this.$store.commit('updateItem', { key: 'currentCardNo', value: '' })
+    chageStepIndexTpPerv() {
+      this.$store.commit("chageStepIndex", 1);
+      this.$store.commit("updateItem", { key: "currentCardNo", value: "" });
     }
   },
   components: {
     StepsIndicator
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

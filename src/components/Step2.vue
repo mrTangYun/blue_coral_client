@@ -4,92 +4,120 @@
     <div class="pageContent">
       <div class="STLiBian tx1">
         本卡内含：
-        <template  v-if="cardInfo.giftPackage.isShowAmount">价值
-          <span class="AvantGardeITCbyBT amount">{{cardInfo.giftPackage.amount}}</span>元礼箱
+        <template v-if="cardInfo.giftPackage.isShowAmount"
+          >价值
+          <span class="AvantGardeITCbyBT amount">{{
+            cardInfo.giftPackage.amount
+          }}</span
+          >元礼箱
         </template>
       </div>
       <div class="presentsOuter">
         <div class="presents">
-          <div v-for="(item, index) in presents" :key="item + index" class="item">
-            <div class="title">{{item.title}}</div>
+          <div
+            v-for="(item, index) in presents"
+            :key="item + index"
+            class="item"
+          >
+            <div class="title">{{ item.title }}</div>
             <div class="dot"></div>
-            <div class="unit">{{item.unit}}</div>
+            <div class="unit">{{ item.unit }}</div>
           </div>
         </div>
       </div>
     </div>
-    <div :class="{
-      btns:true, btns_row:true
-    }">
+    <div  class="STLiBian tx5" v-if="cardInfo.getPresentWay === 'EXPRESS'">
+      提示：商家发货后，可查询单号。
+    </div>
+    <div
+      :class="{
+        btns: true,
+        btns_row: true
+      }"
+    >
       <template v-if="isActivated">
         <div
           :class="{
-      btn: true,
-      isValidated: true
-    }"
+            btn: true,
+            isValidated: true
+          }"
           @click="chageStepIndexTpPerv"
-        >返 回</div>
+        >
+          返 回
+        </div>
         <div
+          v-if="cardInfo.getPresentWay === 'EXPRESS'"
           :class="{
-      btn: true,
-      isValidated: true
-    }"
+            btn: true,
+            isValidated: true
+          }"
           @click="clickCheckExpressHandler"
-        >配送单号查询</div>
+        >
+          配送单号查询
+        </div>
       </template>
       <template v-else>
         <div
           :class="{
-      btn: true,
-      isValidated: true
-    }"
+            btn: true,
+            isValidated: true
+          }"
           @click="chageStepIndexToNext"
-        >马上激活</div>
+        >
+          马上激活
+        </div>
         <div
           :class="{
-      btn: true,
-      isValidated: true
-    }"
+            btn: true,
+            isValidated: true
+          }"
           @click="chageStepIndexTpPerv"
-        >以后再说</div>
+        >
+          以后再说
+        </div>
       </template>
     </div>
   </div>
 </template>
 
 <script>
-import StepsIndicator from '@/components/StepsIndicator'
-import { mapState } from 'vuex'
+import StepsIndicator from "@/components/StepsIndicator";
+import { mapState } from "vuex";
 export default {
   computed: {
-    ...mapState(['isActivated', 'cardInfo']),
-    presents: function () {
+    ...mapState(["isActivated", "cardInfo"]),
+    presents: function() {
       return this.cardInfo.giftPackage.Commdities.map(
         ({ detail: { title }, count, unit }) => ({
           title,
           unit: count + unit
         })
-      )
+      );
     }
   },
   methods: {
-    chageStepIndexToNext () {
-      this.$store.commit('chageStepIndex', 2)
+    chageStepIndexToNext() {
+      this.$store.commit("chageStepIndex", 2);
     },
-    chageStepIndexTpPerv () {
-      this.$store.commit('chageStepIndex', 0)
+    chageStepIndexTpPerv() {
+      this.$store.commit("chageStepIndex", 0);
     },
-    clickCheckExpressHandler () {
-      this.$store.commit('chageStepIndex', 6)
+    clickCheckExpressHandler() {
+      this.$store.commit("chageStepIndex", 6);
     }
   },
   components: {
     StepsIndicator
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
+.tx5{
+  font-size: 36px;
+  color: #dc2123;
+  text-align: center;
+}
 .tx1 {
   font-size: 48px;
   font-weight: bold;
