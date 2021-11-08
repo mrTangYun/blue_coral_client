@@ -22,8 +22,6 @@ export default new Vuex.Store({
     /// 收货地址
     address: '',
     deliverType: 'self',
-    /// 自提取货时间
-    zt_qhsj: '',
     /// 照片地址
     fileKey: null,
     cardInfo: null
@@ -36,10 +34,6 @@ export default new Vuex.Store({
     /// 更改当前卡号
     updateCurrentCardNo(state, no) {
       state.currentCardNo = no.toUpperCase()
-    },
-    /// 更改自提取货时间
-    updateZt_qhsj(state, timeStr) {
-      state.zt_qhsj = timeStr
     },
     /// 更改值
     updateItem(state, { key, value }) {
