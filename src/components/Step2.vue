@@ -5,7 +5,7 @@
       <div class="STLiBian tx1">
         本卡内含：
         <template  v-if="cardInfo.giftPackage.isShowAmount">价值
-          <span class="Trends amount">{{cardInfo.giftPackage.amount}}</span>元礼箱
+          <span class="AvantGardeITCbyBT amount">{{cardInfo.giftPackage.amount}}</span>元礼箱
         </template>
       </div>
       <div class="presentsOuter">
@@ -29,6 +29,13 @@
     }"
           @click="chageStepIndexTpPerv"
         >返 回</div>
+        <div
+          :class="{
+      btn: true,
+      isValidated: true
+    }"
+          @click="clickCheckExpressHandler"
+        >配送单号查询</div>
       </template>
       <template v-else>
         <div
@@ -71,6 +78,9 @@ export default {
     },
     chageStepIndexTpPerv () {
       this.$store.commit('chageStepIndex', 0)
+    },
+    clickCheckExpressHandler () {
+      this.$store.commit('chageStepIndex', 6)
     }
   },
   components: {
@@ -89,6 +99,7 @@ export default {
 }
 .amount {
   color: #eb6f1c;
+  font-size: 70px;
 }
 .pageContent {
   display: flex;

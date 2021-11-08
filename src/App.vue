@@ -32,8 +32,8 @@ body {
 .STLiBian {
   font-family: STLiBian;
 }
-.Trends {
-  font-family: Trends;
+.AvantGardeITCbyBT {
+  font-family: AvantGardeITCbyBT;
 }
 #nav {
   padding: 30px;
