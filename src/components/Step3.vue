@@ -3,24 +3,40 @@
     <StepsIndicator />
     <div class="pageContent">
       <div class="STLiBian pageTitles">请选择提货方式</div>
-      <div class="STLiBian tabsBtns">
+      <div class=" tabsBtns2">
         <div
           :class="{
-            tabBtn: true,
-            isActivited: deliverType === 'express'
+            tabBtn: true
           }"
           @click="changeTab('express')"
         >
-          免费配送
+          <img
+            v-show="deliverType === 'express'"
+            src="./images/mfps1.png"
+            alt=""
+          />
+          <img
+            v-show="deliverType !== 'express'"
+            src="./images/mfps2.png"
+            alt=""
+          />
         </div>
         <div
           :class="{
-            tabBtn: true,
-            isActivited: deliverType === 'self'
+            tabBtn: true
           }"
           @click="changeTab('self')"
         >
-          到店自取
+          <img
+            v-show="deliverType === 'self'"
+            src="./images/ddzq1.png"
+            alt=""
+          />
+          <img
+            v-show="deliverType !== 'self'"
+            src="./images/ddzq2.png"
+            alt=""
+          />
         </div>
       </div>
       <div class="STLiBian tx1">完善持卡人信息</div>
@@ -76,8 +92,9 @@
         }"
       >
         <label class="btnPhoto" for="photoFile">
-          <img :src="require('./images/photo.png')" alt />
-          <span>请为“挚情卡”拍照</span>
+          <!-- <img :src="require('./images/photo.png')" alt />
+          <span>请为“挚情卡”拍照</span> -->
+          <img :src="require('./images/pz.png')" alt />
         </label>
 
         <input
@@ -109,93 +126,93 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
-import StepsIndicator from '@/components/StepsIndicator'
+import { mapState, mapMutations, mapActions } from "vuex";
+import StepsIndicator from "@/components/StepsIndicator";
 export default {
   computed: {
-    ...mapState(['name', 'mobile', 'address', 'deliverType', 'fileKey']),
-    ...mapActions(['onUploadFile']),
-    validateName: function () {
+    ...mapState(["name", "mobile", "address", "deliverType", "fileKey"]),
+    ...mapActions(["onUploadFile"]),
+    validateName: function() {
       if (!this.name) {
-        return false
+        return false;
       }
-      const r = /^[\u4E00-\u9FA5]{2,4}$/
-      return r.test(this.name)
+      const r = /^[\u4E00-\u9FA5]{2,4}$/;
+      return r.test(this.name);
     },
-    validateMobile: function () {
+    validateMobile: function() {
       if (!this.mobile) {
-        return false
+        return false;
       }
-      const r = /^1\d{10}$/
-      return r.test(this.mobile)
+      const r = /^1\d{10}$/;
+      return r.test(this.mobile);
     },
-    validateAddress: function () {
+    validateAddress: function() {
       if (!this.address) {
-        return false
+        return false;
       }
-      return true
+      return true;
     },
-    validateNextBtn: function () {
+    validateNextBtn: function() {
       if (this.validateName && this.validateMobile && this.fileKey) {
-        if (this.deliverType === 'self') {
-          return true
+        if (this.deliverType === "self") {
+          return true;
         } else {
-          return this.validateAddress
+          return this.validateAddress;
         }
       }
-      return false
+      return false;
     }
   },
-  data: function () {
+  data: function() {
     return {
       hour: null
-    }
+    };
   },
 
   methods: {
-    inputBlur () {
-      window.scrollTo(0, 0)
+    inputBlur() {
+      window.scrollTo(0, 0);
     },
-    changeInputAddress (e) {
-      this.$store.commit('updateItem', {
-        key: 'address',
+    changeInputAddress(e) {
+      this.$store.commit("updateItem", {
+        key: "address",
         value: e.target.value
-      })
+      });
     },
-    changeInputName (e) {
-      this.$store.commit('updateItem', {
-        key: 'name',
+    changeInputName(e) {
+      this.$store.commit("updateItem", {
+        key: "name",
         value: e.target.value
-      })
+      });
     },
-    changeInputMobile (e) {
-      this.$store.commit('updateItem', {
-        key: 'mobile',
+    changeInputMobile(e) {
+      this.$store.commit("updateItem", {
+        key: "mobile",
         value: e.target.value
-      })
+      });
     },
-    chageStepIndexToNext () {
+    chageStepIndexToNext() {
       if (this.validateNextBtn) {
-        this.$store.commit('chageStepIndex', 3)
+        this.$store.commit("chageStepIndex", 3);
       }
     },
 
-    chageStepIndexTpPerv () {
-      this.$store.commit('chageStepIndex', 1)
+    chageStepIndexTpPerv() {
+      this.$store.commit("chageStepIndex", 1);
     },
-    changeTab (type) {
-      this.$store.commit('updateItem', {
-        key: 'deliverType',
+    changeTab(type) {
+      this.$store.commit("updateItem", {
+        key: "deliverType",
         value: type
-      })
+      });
     },
 
-    onClickTakePhoto (e) {
+    onClickTakePhoto(e) {
       if (e.target.files.length) {
-        this.$store.dispatch('onUploadFile', {
+        this.$store.dispatch("onUploadFile", {
           apolloClient: this.$apollo.provider.defaultClient,
           file: e.target.files[0]
-        })
+        });
       }
       // window.wx.chooseImage({
       //   count: 1, // 默认9
@@ -212,14 +229,32 @@ export default {
   components: {
     StepsIndicator
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-.pageTitles{
+.pageTitles {
   font-size: 48px;
   color: #c19b25;
-  margin-bottom: 48px ;
+  margin-bottom: 48px;
+}
+.tabsBtns2 {
+  display: flex;
+  justify-content: center;
+  .tabBtn {
+    width: 276px;
+    height: 61px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+    &:first {
+      margin-right: 8px;
+    }
+    &:last-child {
+      margin-left: 8px;
+    }
+  }
 }
 .tabsBtns {
   display: flex;
@@ -238,15 +273,32 @@ export default {
     background-blend-mode: normal, normal;
     border-radius: 30px 31px 31px 30px;
     position: relative;
-    text-indent: 29px;
-    &::before,
-    &::after {
-      content: ' ';
-      display: block;
-      position: absolute;
-      left: 0;
-      border-radius: 50%;
+    img {
+      width: 100%;
+      height: 100%;
     }
+    // text-indent: 29px;
+    i {
+      display: block;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      background-color: #ffffff;
+      margin-left: 8px;
+    }
+    span {
+      display: block;
+      flex: 1;
+      text-align: center;
+    }
+    // &::before,
+    // &::after {
+    //   content: ' ';
+    //   display: block;
+    //   position: absolute;
+    //   left: 0;
+    //   border-radius: 50%;
+    // }
     &::before {
       width: 48px;
       height: 48px;
@@ -257,11 +309,18 @@ export default {
     &.isActivited {
       background-image: linear-gradient(#3c5b87, #3c5b87),
         linear-gradient(#2f4f7e, #2f4f7e);
-      &::after {
-        width: 38px;
-        height: 38px;
-        left: 13px;
-        background-color: #69ba00;
+      i {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &::after {
+          content: " ";
+          display: block;
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          background-color: #69ba00;
+        }
       }
     }
     &:first {
@@ -339,9 +398,9 @@ export default {
   justify-content: center;
   align-items: center;
   img {
-    width: 38px;
-    height: 33px;
-    margin-right: 39px;
+    width: 100%;
+    height: 100%;
+    // margin-right: 39px;
   }
 }
 #photoFile {
