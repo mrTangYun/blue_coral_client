@@ -8,6 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    wxReady: false,
     updateUploadProgress: -1,
     /// 是否已经激活
     isActivated: false,

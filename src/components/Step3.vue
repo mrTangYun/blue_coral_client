@@ -74,17 +74,17 @@
       </div>
       <div class="STLiBian inputTips" v-show="deliverType !== 'self'"></div>
       <div class="tab" v-show="deliverType === 'express'">
-        <div class="shurudizhi" 
-            @click="getWxAddressHander">
-            <img :src="require('./images/shurudizi.png')" alt />
-          <!-- <input
+        <div v-if="!wxReady" class="inputArea">
+          <input
             :value="address"
             @input="changeInputAddress"
-            disabled
             placeholder="请详细填写收件人地址"
             @blur="inputBlur"
           />
-          <div class="ok" v-if="validateAddress"></div> -->
+          <div class="ok" v-if="validateAddress"></div>
+        </div>
+        <div v-else class="shurudizhi" @click="getWxAddressHander">
+          <img :src="require('./images/shurudizi.png')" alt />
         </div>
         <div class="STLiBian inputTips"></div>
       </div>
@@ -133,7 +133,7 @@ import { mapState, mapMutations, mapActions } from "vuex";
 import StepsIndicator from "@/components/StepsIndicator";
 export default {
   computed: {
-    ...mapState(["name", "mobile", "address", "deliverType", "fileKey"]),
+    ...mapState(["name", "mobile", "address", "deliverType", "fileKey", "wxReady"]),
     ...mapActions(["onUploadFile"]),
     validateName: function() {
       if (!this.name) {
@@ -150,6 +150,7 @@ export default {
       return r.test(this.mobile);
     },
     validateAddress: function() {
+      console.log('this.address', this.address);
       if (!this.address) {
         return false;
       }
@@ -278,10 +279,10 @@ export default {
     }
   }
 }
-.shurudizhi{
-    width: 500px;
-    margin: 0 auto;
-  img{
+.shurudizhi {
+  width: 500px;
+  margin: 0 auto;
+  img {
     width: 100%;
   }
 }

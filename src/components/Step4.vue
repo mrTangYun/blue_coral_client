@@ -90,6 +90,7 @@ export default {
               $mobile: String!
               $imageUrl: String
               $address: String
+              $getPresentWay: GetPresentWay!
             ) {
               bindInfo(
                 code: $code
@@ -97,6 +98,7 @@ export default {
                 mobile: $mobile
                 imageUrl: $imageUrl
                 address: $address
+                getPresentWay: $getPresentWay
               ) {
                 id
                 status
@@ -114,7 +116,8 @@ export default {
             name: this.name,
             mobile: this.mobile,
             imageUrl: this.fileKey,
-            address: this.deliverType === 'express' ? this.address : null
+            address: this.deliverType === 'express' ? this.address : null,
+            getPresentWay: this.deliverType.toUpperCase()
             // pickupTime: this.deliverType === 'self' ? this.zt_qhsj : null
           }
         })
@@ -131,8 +134,9 @@ export default {
           this.$store.commit('chageStepIndex', 4)
         })
         .catch(e => {
+          alert(e)
           this.isLoading = false
-          this.$toasted.show(e.messsage, {
+          this.$toasted.show(e.msg, {
             theme: 'bubble',
             position: 'top-center',
             duration: 3000
