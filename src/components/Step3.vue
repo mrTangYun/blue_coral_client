@@ -74,14 +74,17 @@
       </div>
       <div class="STLiBian inputTips" v-show="deliverType !== 'self'"></div>
       <div class="tab" v-show="deliverType === 'express'">
-        <div class="inputArea">
-          <input
+        <div class="shurudizhi" 
+            @click="getWxAddressHander">
+            <img :src="require('./images/shurudizi.png')" alt />
+          <!-- <input
             :value="address"
             @input="changeInputAddress"
+            disabled
             placeholder="请详细填写收件人地址"
             @blur="inputBlur"
           />
-          <div class="ok" v-if="validateAddress"></div>
+          <div class="ok" v-if="validateAddress"></div> -->
         </div>
         <div class="STLiBian inputTips"></div>
       </div>
@@ -170,6 +173,25 @@ export default {
   },
 
   methods: {
+    getWxAddressHander() {
+      wx.openAddress({
+        success: res => {
+          var userName = res.userName; // 收货人姓名
+          var postalCode = res.postalCode; // 邮编
+          var provinceName = res.provinceName; // 国标收货地址第一级地址（省）
+          var cityName = res.cityName; // 国标收货地址第二级地址（市）
+          var countryName = res.countryName; // 国标收货地址第三级地址（国家）
+          var detailInfo = res.detailInfo; // 详细收货地址信息
+          var nationalCode = res.nationalCode; // 收货地址国家码
+          var telNumber = res.telNumber; // 收货人手机号码
+          this.$store.commit("updateItem", {
+            key: "address",
+            value:
+              res.provinceName + res.cityName + res.countryName + res.detailInfo
+          });
+        }
+      });
+    },
     inputBlur() {
       window.scrollTo(0, 0);
     },
@@ -254,6 +276,13 @@ export default {
     &:last-child {
       margin-left: 8px;
     }
+  }
+}
+.shurudizhi{
+    width: 500px;
+    margin: 0 auto;
+  img{
+    width: 100%;
   }
 }
 .tabsBtns {

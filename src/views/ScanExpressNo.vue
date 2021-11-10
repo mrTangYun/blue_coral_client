@@ -12,8 +12,10 @@
       <br />
       <br />
       <br />
-      <div @click="scanHandler">扫一扫</div>
-      <div>{{ result }}</div>
+      <!-- <div @click="scanHandler">扫一扫</div>
+      <div>{{ result }}</div> -->
+      <div @click="getAddHandler">获取地址</div>
+      <div>{{ resultAddress }}</div>
     </template>
   </div>
 </template>
@@ -28,10 +30,26 @@ export default {
       obj: null,
       isLoading: true,
       result: null,
-      status: "初始化"
+      status: "初始化",
+      resultAddress: ''
     };
   },
   methods: {
+    getAddHandler() {
+      wx.openAddress({
+        success: (res) => {
+          var userName = res.userName; // 收货人姓名
+          var postalCode = res.postalCode; // 邮编
+          var provinceName = res.provinceName; // 国标收货地址第一级地址（省）
+          var cityName = res.cityName; // 国标收货地址第二级地址（市）
+          var countryName = res.countryName; // 国标收货地址第三级地址（国家）
+          var detailInfo = res.detailInfo; // 详细收货地址信息
+          var nationalCode = res.nationalCode; // 收货地址国家码
+          var telNumber = res.telNumber; // 收货人手机号码
+          this.resultAddress = JSON.stringify(res);
+        }
+      });
+    },
     scanHandler() {
       wx.scanQRCode({
         needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
