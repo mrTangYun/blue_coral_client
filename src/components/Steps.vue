@@ -5,6 +5,7 @@
     <Step3 v-if="currentStepIndex === 2" />
     <Step4 v-if="currentStepIndex === 3" />
     <Step5 v-if="currentStepIndex === 4" />
+    <Step6 v-if="currentStepIndex === 6" />
   </div>
 </template>
 
@@ -17,6 +18,7 @@ import Step2 from '@/components/Step2'
 import Step3 from '@/components/Step3'
 import Step4 from '@/components/Step4'
 import Step5 from '@/components/Step5'
+import Step6 from '@/components/Step6'
 
 export default {
   data: function () {
@@ -31,7 +33,8 @@ export default {
     Step2,
     Step3,
     Step4,
-    Step5
+    Step5,
+    Step6
   },
 
   methods: {

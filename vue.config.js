@@ -9,6 +9,7 @@ module.exports = {
   },
   outputDir: 'dist',
   devServer: {
+    disableHostCheck: true,
     proxy: {
       '/api': {
         target: 'http://localhost:4000',

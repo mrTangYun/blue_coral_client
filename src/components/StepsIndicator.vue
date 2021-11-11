@@ -1,6 +1,17 @@
 <template>
   <div class="container">
-    <template v-if="isActivated">
+    <template v-if="currentStepIndex === 6">
+      <div class="itemContainer">
+        <div
+          :class="{
+          circle: true,
+          step6: true,
+          isActived: true
+      }"
+        >卡信息{{currentStepIndex}}</div>
+      </div>
+    </template>
+    <template v-else-if="isActivated">
       <div class="itemContainer">
         <div
           :class="{
@@ -41,7 +52,7 @@ import { mapState } from "vuex";
 export default {
   data: function () {
     return {
-      steps: ["卡号", "卡信息", "卡激活", "完成"],
+      steps: ["卡号", "卡内详情", "完善信息", "完成"],
     };
   },
   computed: {
@@ -72,7 +83,7 @@ $acitivitedColor: #3c5b87;
       justify-content: center;
       align-items: center;
       transition: all 0.5s;
-      background-size: 43px auto;
+      background-size: 32px auto;
       background-repeat: no-repeat;
       background-position: center center;
       text-indent: -99999px;
@@ -88,6 +99,9 @@ $acitivitedColor: #3c5b87;
         }
         &.step3 {
           background-image: url("./images/txt_wc2.png");
+        }
+        &.step6 {
+          background-image: url("./images/txt_psxx.png");
         }
       }
       &.step1 {

@@ -8,6 +8,61 @@
   </div>
 </template>
 
+<script>
+import gql from "graphql-tag";
+export default {
+  data: function() {
+    return {
+      wxReady: false
+    };
+  },
+  mounted: function() {
+    this.initPage();
+  },
+  methods: {
+    initPage() {
+      this.initWx();
+    },
+    async initWx() {
+      const url = window.location.origin + window.location.pathname;
+      const wxConfig = await this.$apollo.provider.defaultClient.query({
+        query: gql`
+          query weixinJsConfig($url: String!) {
+            weixinJsConfig(url: $url) {
+              appId
+              nonceStr
+              timestamp
+              signature
+            }
+          }
+        `,
+        variables: {
+          url
+        }
+      });
+      window.wx.ready(() => {
+        // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+        // console.log("ready---------------");
+        this.wxReady = true;
+        this.$store.commit('updateItem', { key: 'wxReady', value: true })
+      });
+      window.wx.error(function(res) {
+        console.log("res------", res);
+        // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+      });
+
+      const { __typename, ...weixinJsConfig } = wxConfig.data.weixinJsConfig;
+      console.log("weixinJsConfig", weixinJsConfig);
+      window.wx.config({
+        // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        ...weixinJsConfig,
+        jsApiList: ["openAddress"] // 必填，需要使用的JS接口列表
+      });
+    }
+  }
+};
+</script>
+
 <style lang="scss">
 @import "./fonts/font.css";
 html,
@@ -32,8 +87,8 @@ body {
 .STLiBian {
   font-family: STLiBian;
 }
-.Trends {
-  font-family: Trends;
+.AvantGardeITCbyBT {
+  font-family: AvantGardeITCbyBT;
 }
 #nav {
   padding: 30px;

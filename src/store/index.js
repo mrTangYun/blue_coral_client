@@ -8,6 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    wxReady: false,
     updateUploadProgress: -1,
     /// 是否已经激活
     isActivated: false,
@@ -21,9 +22,7 @@ export default new Vuex.Store({
     mobile: '',
     /// 收货地址
     address: '',
-    deliverType: 'self',
-    /// 自提取货时间
-    zt_qhsj: '',
+    deliverType: 'express',
     /// 照片地址
     fileKey: null,
     cardInfo: null
@@ -36,10 +35,6 @@ export default new Vuex.Store({
     /// 更改当前卡号
     updateCurrentCardNo(state, no) {
       state.currentCardNo = no.toUpperCase()
-    },
-    /// 更改自提取货时间
-    updateZt_qhsj(state, timeStr) {
-      state.zt_qhsj = timeStr
     },
     /// 更改值
     updateItem(state, { key, value }) {
