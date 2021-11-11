@@ -1,7 +1,7 @@
 FROM node:14.0.0-alpine as builder
 
 WORKDIR /code
-RUN yarn config set registry https://registry.npm.taobao.org/
+RUN npm install -g mirror-config-china && yarn config set registry https://registry.npm.taobao.org/
 COPY package.json /code
 RUN yarn
 
