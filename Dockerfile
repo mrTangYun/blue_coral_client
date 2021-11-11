@@ -1,9 +1,11 @@
 FROM node:14.0.0-alpine as builder
 
 WORKDIR /code
-RUN npm i -g mirror-config-china --registry=https://registry.npm.taobao.org -f && yarn config set registry https://registry.npm.taobao.org/
+RUN npm i node-sass --sass_binary_site=https://npm.taobao.org/mirrors/node-sass/ && \
+    npm rebuild node-sass && \
+    yarn config set registry https://registry.npm.taobao.org/
 COPY package.json /code
-RUN yarn
+RUN npm install
 
 COPY . /code
 RUN npm run build
