@@ -1,8 +1,8 @@
 FROM node:14.0.0-alpine as builder
 
 WORKDIR /code
-RUN npm i node-sass --sass_binary_site=https://npm.taobao.org/mirrors/node-sass/ && \
-    npm rebuild node-sass && \
+ENV SASS_BINARY_SITE https://npm.taobao.org/mirrors/node-sass/
+RUN npm i node-sass --sass_binary_site=https://npm.taobao.org/mirrors/node-sass && \
     yarn config set registry https://registry.npm.taobao.org/
 COPY package.json /code
 RUN npm install
