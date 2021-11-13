@@ -125,6 +125,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$red: #dc2123;
 .tx1 {
   font-size: 48px;
   font-weight: bold;
@@ -164,7 +165,7 @@ export default {
     margin: 37px auto 22px;
   }
   .t3 {
-    color: #c19b25;
+    color: $red;
     font-size: 36px;
     margin-bottom: 34px;
   }
@@ -185,17 +186,17 @@ export default {
     margin-bottom: 52px;
   }
   .t1a {
-    color: #dc2123;
+    color: $red;
     font-size: 50px;
     margin-top: 67px;
     margin-bottom: 67px;
   }
   .t2a {
-    color: #dc2123;
+    color: $red;
     font-size: 50px;
   }
   .t3a {
-    color: #dc2123;
+    color: $red;
     font-size: 36px;
   }
 }
