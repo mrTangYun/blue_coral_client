@@ -25,7 +25,7 @@
         <div class="AvantGardeITCbyBT t2">
           {{ cardInfo.express.expressNo }}
         </div>
-        <div class="t3">本次配送：{{ cardInfo.express.companyName }}</div>
+        <div class="t3">本次配送单位：{{ cardInfo.express.companyName }}<br />每晚22点前更新物流信息</div>
         <div class="t4" @click="copyHandler">
           点我复制单号
         </div>
