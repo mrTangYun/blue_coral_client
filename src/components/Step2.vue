@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <div  class="STLiBian tx5" v-if="cardInfo.getPresentWay === 'EXPRESS'">
+    <div  class="STLiBian tx5" v-if="cardInfo.status !== 'DELETED' && cardInfo.getPresentWay === 'EXPRESS'">
       提示：商家发货后，可查询单号。
     </div>
     <div
@@ -45,16 +45,18 @@
         >
           返 回
         </div>
-        <div
-          v-if="cardInfo.getPresentWay === 'EXPRESS'"
-          :class="{
-            btn: true,
-            isValidated: true
-          }"
-          @click="clickCheckExpressHandler"
-        >
-          配送单号查询
-        </div>
+        <template v-if="cardInfo.status !== 'DELETED'">
+          <div
+            v-if="cardInfo.getPresentWay === 'EXPRESS'"
+            :class="{
+              btn: true,
+              isValidated: true
+            }"
+            @click="clickCheckExpressHandler"
+          >
+            配送单号查询
+          </div>
+        </template>
       </template>
       <template v-else>
         <div
