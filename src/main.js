@@ -13,7 +13,7 @@ Vue.use(Toasted)
 
 const apolloClient = new ApolloClient({
   // You should use an absolute URL here
-  uri: '/api'
+  uri: 'http://blue-coral.mrtangyun.com/api'
 })
 
 Vue.config.productionTip = false

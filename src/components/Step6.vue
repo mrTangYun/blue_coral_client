@@ -19,13 +19,24 @@
         </div>
       </div>
       <div class="presentsOuter STLiBian" v-if="cardInfo.express">
+        <div class="tt1">
+          您的礼箱已经发出
+        </div>
+        <div class="tt1" v-if="cardInfo.status === 'DELETED'">
+          卡片已注销
+        </div>
+        <div class="tt2">如有疑问请至电客服（卡背面）</div>
+
         <div class="t1">
           冷链物流单号
         </div>
         <div class="AvantGardeITCbyBT t2">
           {{ cardInfo.express.expressNo }}
         </div>
-        <div class="t3">本次配送单位：{{ cardInfo.express.companyName }}<br />每晚22点前更新物流信息</div>
+        <div class="t3">
+          本次配送单位：{{ cardInfo.express.companyName
+          }}<br />每晚22点前更新物流信息
+        </div>
         <div class="t4" @click="copyHandler">
           点我复制单号
         </div>
@@ -147,10 +158,19 @@ $red: #dc2123;
   &.presentsOuterA {
     padding: 0 125px;
   }
+  .tt1{
+    color: #f70000;
+    font-size: 50px;
+  }
+  .tt2{
+    color: #f70000;
+    font-size: 36px;
+  }
   .t1 {
     color: #c19b25;
     font-size: 48px;
     font-weight: bold;
+    margin: 40px auto 0;
   }
   .t2 {
     color: #c19b25;
@@ -162,7 +182,7 @@ $red: #dc2123;
     background-blend-mode: normal, normal;
     border-radius: 15px;
     border: solid 5px #435f84;
-    margin: 37px auto 22px;
+    margin: 0px auto 22px;
   }
   .t3 {
     color: $red;
@@ -172,7 +192,7 @@ $red: #dc2123;
   .t4 {
     color: #fff;
     font-size: 48px;
-    margin-bottom: 34px;
+    margin-bottom: 14px;
     height: 80px;
     line-height: 80px;
     background-image: linear-gradient(#3c5b87, #3c5b87),
@@ -183,7 +203,7 @@ $red: #dc2123;
   .t5 {
     color: #c19b25;
     font-size: 36px;
-    margin-bottom: 52px;
+    margin-bottom: 10px;
   }
   .t1a {
     color: $red;

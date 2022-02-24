@@ -45,18 +45,16 @@
         >
           返 回
         </div>
-        <template v-if="cardInfo.status !== 'DELETED'">
-          <div
-            v-if="cardInfo.getPresentWay === 'EXPRESS'"
-            :class="{
-              btn: true,
-              isValidated: true
-            }"
-            @click="clickCheckExpressHandler"
-          >
-            配送单号查询
-          </div>
-        </template>
+        <div
+          v-if="cardInfo.getPresentWay === 'EXPRESS'"
+          :class="{
+            btn: true,
+            isValidated: true
+          }"
+          @click="clickCheckExpressHandler"
+        >
+          配送单号查询
+        </div>
       </template>
       <template v-else>
         <div
