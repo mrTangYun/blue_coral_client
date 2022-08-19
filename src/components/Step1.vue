@@ -86,15 +86,7 @@ export default {
         if (data.data.getCodeInfo) {
           this.$store.commit('updateItem', { key: 'cardInfo', value: data.data.getCodeInfo })
           this.$store.commit('updateItem', { key: 'isActivated', value: data.data.getCodeInfo.status !== 'PENDING' })
-          if (data.data.getCodeInfo.status === 'DELETED') {
-            this.$toasted.show("已取货销卡", { 
-              theme: "bubble", 
-              position: "top-center", 
-              duration : 3000
-            });
-          } else {
-            this.$store.commit('chageStepIndex', 1)
-          }
+          this.$store.commit('chageStepIndex', 1)
         } else {
           // alert('卡号错误')
           this.$toasted.show("卡号错误", { 
