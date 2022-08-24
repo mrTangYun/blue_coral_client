@@ -19,23 +19,31 @@
         </div>
       </div>
       <div class="presentsOuter STLiBian" v-if="cardInfo.express">
-        <div class="t1">
-          冷链物流单号
-        </div>
-        <div class="AvantGardeITCbyBT t2">
-          {{ cardInfo.express.expressNo }}
-        </div>
-        <div class="t3">本次配送单位：{{ cardInfo.express.companyName }}<br />每晚22点前更新物流信息</div>
-        <div class="t4" @click="copyHandler">
-          点我复制单号
-        </div>
-        <div class="t5">详细配送信息可在<br />物流官方网站进行查询</div>
-        <div class="t4" @click="gotoWeb">
-          进入物流官网
-        </div>
-        <div class="t4" @click="callPhone">
-          拨打物流客服电话
-        </div>
+        <div>您的礼箱已经{{cardInfo.express.companyName === '跑腿配送' ? '提' : '发'}}货</div>
+        <div>提货方式：{{cardInfo.express.companyName}}</div>
+        <div>很荣幸为您提供服务</div>
+        <template v-if="cardInfo.express.companyName !== '跑腿配送'">
+          <div class="t1">
+            冷链物流单号
+          </div>
+          <div class="AvantGardeITCbyBT t2">
+            {{ cardInfo.express.expressNo }}
+          </div>
+          <div class="t3">本次配送单位：{{ cardInfo.express.companyName }}<br />每晚22点前更新物流信息</div>
+          <div class="t4" @click="copyHandler">
+            点我复制单号
+          </div>
+          <div class="t5">详细配送信息可在<br />物流官方网站进行查询</div>
+          <div class="t4" @click="gotoWeb">
+            进入物流官网
+          </div>
+          <div class="t4" @click="callPhone">
+            拨打物流客服电话
+          </div>
+        </template>
+        <template v-else>
+
+        </template>
       </div>
     </div>
     <div

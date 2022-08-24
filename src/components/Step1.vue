@@ -87,11 +87,7 @@ export default {
           this.$store.commit('updateItem', { key: 'cardInfo', value: data.data.getCodeInfo })
           this.$store.commit('updateItem', { key: 'isActivated', value: data.data.getCodeInfo.status !== 'PENDING' })
           if (data.data.getCodeInfo.status === 'DELETED') {
-            this.$toasted.show("已取货销卡", { 
-              theme: "bubble", 
-              position: "top-center", 
-              duration : 3000
-            });
+            this.$store.commit('chageStepIndex', 6)
           } else {
             this.$store.commit('chageStepIndex', 1)
           }

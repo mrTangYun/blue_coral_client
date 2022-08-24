@@ -12,9 +12,9 @@ module.exports = {
     disableHostCheck: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:4000',
-        // target: 'http://blue_coral.mrtangyun.com/api',
-        // target: 'http://www.digroup.com.cn:3015/',
+        // target: 'http://localhost:4000',
+        // target: 'http://blue-coral.mrtangyun.com/api',
+        target: 'http://www.digroup.com.cn:3050/api',
         ws: true,
         changeOrigin: true
       }
