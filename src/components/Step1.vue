@@ -74,6 +74,11 @@ export default {
                     unit
                   }
                 }
+                bindInfo{
+                  id
+                  name
+                  mobile
+                }
               }
             }
           `,
@@ -87,7 +92,7 @@ export default {
           this.$store.commit('updateItem', { key: 'cardInfo', value: data.data.getCodeInfo })
           this.$store.commit('updateItem', { key: 'isActivated', value: data.data.getCodeInfo.status !== 'PENDING' })
           if (data.data.getCodeInfo.status === 'DELETED') {
-            this.$store.commit('chageStepIndex', 6)
+            this.$store.commit('chageStepIndex', '已销卡')
           } else {
             this.$store.commit('chageStepIndex', 1)
           }

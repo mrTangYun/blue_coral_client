@@ -6,6 +6,7 @@
     <Step4 v-if="currentStepIndex === 3" />
     <Step5 v-if="currentStepIndex === 4" />
     <Step6 v-if="currentStepIndex === 6" />
+    <StepYiXiaoKa v-if="currentStepIndex === '已销卡'" />
   </div>
 </template>
 
@@ -19,6 +20,7 @@ import Step3 from '@/components/Step3'
 import Step4 from '@/components/Step4'
 import Step5 from '@/components/Step5'
 import Step6 from '@/components/Step6'
+import StepYiXiaoKa from '@/components/StepYiXiaoKa'
 
 export default {
   data: function () {
@@ -34,7 +36,8 @@ export default {
     Step3,
     Step4,
     Step5,
-    Step6
+    Step6,
+    StepYiXiaoKa
   },
 
   methods: {
