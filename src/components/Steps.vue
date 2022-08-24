@@ -7,6 +7,9 @@
     <Step5 v-if="currentStepIndex === 4" />
     <Step6 v-if="currentStepIndex === 6" />
     <StepYiXiaoKa v-if="currentStepIndex === '已销卡'" />
+    <StepYiJiHuoZiti v-if="currentStepIndex === '已激活自提'" />
+    <StepYiJiHuoKuaidi v-if="currentStepIndex === '已激活快递'" />
+    <KaNeiXiangQing v-if="currentStepIndex === '卡内详情'" />
   </div>
 </template>
 
@@ -21,6 +24,9 @@ import Step4 from '@/components/Step4'
 import Step5 from '@/components/Step5'
 import Step6 from '@/components/Step6'
 import StepYiXiaoKa from '@/components/StepYiXiaoKa'
+import StepYiJiHuoZiti from '@/components/StepYiJiHuo_ziti'
+import StepYiJiHuoKuaidi from '@/components/StepYiJiHuo_kuaidi'
+import KaNeiXiangQing from '@/components/KaNeiXiangQing'
 
 export default {
   data: function () {
@@ -37,7 +43,10 @@ export default {
     Step4,
     Step5,
     Step6,
-    StepYiXiaoKa
+    StepYiXiaoKa,
+    StepYiJiHuoZiti,
+    StepYiJiHuoKuaidi,
+    KaNeiXiangQing
   },
 
   methods: {
