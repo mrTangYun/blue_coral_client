@@ -17,7 +17,7 @@
       isValidated: true
     }"
           @click="chageStepIndexTpPerv"
-        >返 回</div>
+        >返回</div>
     </div>
   </div>
 </template>

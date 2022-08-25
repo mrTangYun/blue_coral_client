@@ -43,7 +43,7 @@
           }"
           @click="chageStepIndexTpPerv"
         >
-          返 回
+          返回
         </div>
         <template v-if="cardInfo.status !== 'DELETED'">
           <div

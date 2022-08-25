@@ -59,7 +59,7 @@
         }"
         @click="chageStepIndexTpPerv"
       >
-        返 回
+        返回
       </div>
     </div>
   </div>
