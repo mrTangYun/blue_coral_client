@@ -26,9 +26,7 @@
         </div>
       </div>
     </div>
-    <div  class="STLiBian tx5" v-if="cardInfo.status !== 'DELETED' && cardInfo.getPresentWay === 'EXPRESS'">
-      提示：商家发货后，可查询单号。
-    </div>
+    
     <div
       :class="{
         btns: true,
@@ -42,21 +40,7 @@
             isValidated: true
           }"
           @click="chageStepIndexTpPerv"
-        >
-          返回
-        </div>
-        <template v-if="cardInfo.status !== 'DELETED'">
-          <div
-            v-if="cardInfo.getPresentWay === 'EXPRESS'"
-            :class="{
-              btn: true,
-              isValidated: true
-            }"
-            @click="clickCheckExpressHandler"
-          >
-            配送单号查询
-          </div>
-        </template>
+        >返回</div>
       </template>
       <template v-else>
         <div
@@ -102,7 +86,12 @@ export default {
       this.$store.commit("chageStepIndex", 2);
     },
     chageStepIndexTpPerv() {
-      this.$store.commit("chageStepIndex", 0);
+      if (this.cardInfo.getPresentWay === 'EXPRESS') {
+        this.$store.commit("chageStepIndex", '已激活快递');
+      }
+      if (this.cardInfo.getPresentWay === 'SELF') {
+        this.$store.commit("chageStepIndex", '已激活自提');
+      }
     },
     clickCheckExpressHandler() {
       this.$store.commit("chageStepIndex", 6);

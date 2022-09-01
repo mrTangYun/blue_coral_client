@@ -19,9 +19,13 @@
         </div>
       </div>
       <div class="presentsOuter STLiBian" v-if="cardInfo.express">
-        <div>您的礼箱已经{{cardInfo.express.companyName === '跑腿配送' ? '提' : '发'}}货</div>
-        <div>提货方式：{{cardInfo.express.companyName}}</div>
-        <div>很荣幸为您提供服务</div>
+        <div class="t824 t_red">
+          您的礼箱已经发货
+        </div>
+        <div class="t824 t_red">
+          提货方式：{{ cardInfo.express.companyName }}
+        </div>
+        <div class="t824 t_gold">很荣幸为您提供服务</div>
         <template v-if="cardInfo.express.companyName !== '跑腿配送'">
           <div class="t1">
             冷链物流单号
@@ -29,7 +33,7 @@
           <div class="AvantGardeITCbyBT t2">
             {{ cardInfo.express.expressNo }}
           </div>
-          <div class="t3">本次配送单位：{{ cardInfo.express.companyName }}<br />每晚22点前更新物流信息</div>
+          
           <div class="t4" @click="copyHandler">
             点我复制单号
           </div>
@@ -42,8 +46,48 @@
           </div>
         </template>
         <template v-else>
-
+          <div class="myInfo">
+            <div class="STLiBian title">收货人</div>
+            <div class="value">{{ cardInfo.bindInfo.name }}</div>
+            <div class="STLiBian title">收货电话</div>
+            <div class="AvantGardeITCbyBT value">
+              {{ cardInfo.bindInfo.mobile.replace(/(?=(\d{4})+$)/g, " ") }}
+            </div>
+            <!-- <template v-if="deliverType === 'express'">
+              <div class="STLiBian title">收货地址</div>
+              <div class="value">{{ address }}</div>
+            </template> -->
+          </div>
+          <div class="shopInfo">
+            <div class="name">蓝珊瑚鲜生超市</div>
+            <div class="tel">电话：0531 - 5553 5100 / 158 5317 9393</div>
+            <div class="add">地址：济南市高新区 龙奥北路 1 5 7 7 号</div>
+          </div>
         </template>
+      </div>
+    </div>
+    <div class="pageContent" v-if="cardInfo.getPresentWay === 'SELF'">
+      <div class="presentsOuter STLiBian">
+        <div class="t824 t_red">
+          您的礼箱已经完成提货
+        </div>
+        <div class="t824 t_red">
+          提货方式：到店自取
+        </div>
+        <div class="t824 t_gold">很荣幸为您提供服务</div>
+        <div class="myInfo">
+          <div class="STLiBian title">取件人</div>
+          <div class="value">{{ cardInfo.bindInfo.name }}</div>
+          <div class="STLiBian title">取件电话</div>
+          <div class="AvantGardeITCbyBT value">
+            {{ cardInfo.bindInfo.mobile.replace(/(?=(\d{4})+$)/g, " ") }}
+          </div>
+        </div>
+        <div class="shopInfo">
+          <div class="name">蓝珊瑚鲜生超市</div>
+          <div class="tel">电话：0531 - 5553 5100 / 158 5317 9393</div>
+          <div class="add">地址：济南市高新区 龙奥北路 1 5 7 7 号</div>
+        </div>
       </div>
     </div>
     <div
@@ -122,7 +166,7 @@ export default {
       }
     },
     chageStepIndexTpPerv() {
-      this.$store.commit("chageStepIndex", 1);
+      this.$store.commit("chageStepIndex", 0);
       this.$store.commit("updateItem", { key: "currentCardNo", value: "" });
     }
   },
@@ -151,7 +195,7 @@ $red: #dc2123;
 .presentsOuter {
   flex: 1;
   position: relative;
-  padding: 0 87px;
+  padding: 0 57px;
   &.presentsOuterA {
     padding: 0 125px;
   }
@@ -170,7 +214,7 @@ $red: #dc2123;
     background-blend-mode: normal, normal;
     border-radius: 15px;
     border: solid 5px #435f84;
-    margin: 37px auto 22px;
+    margin: 10px auto 22px;
   }
   .t3 {
     color: $red;
@@ -191,7 +235,7 @@ $red: #dc2123;
   .t5 {
     color: #c19b25;
     font-size: 36px;
-    margin-bottom: 52px;
+    margin-bottom: 32px;
   }
   .t1a {
     color: $red;
@@ -205,6 +249,52 @@ $red: #dc2123;
   }
   .t3a {
     color: $red;
+    font-size: 36px;
+  }
+}
+.t824 {
+  font-size: 48px;
+  line-height: 27px;
+  margin: 27px 0;
+  letter-spacing: 0px;
+}
+.t_red {
+  color: #dc2123;
+}
+.t_gold {
+  color: #c19b25;
+}
+
+.myInfo {
+  width: 380px;
+  margin: 0 auto;
+  background-image: linear-gradient(#f6f6f6, #f6f6f6),
+    linear-gradient(#2f4f7e, #2f4f7e);
+  background-blend-mode: normal, normal;
+  border-radius: 15px;
+  border: solid 6px #c4a23d;
+  color: #dc2123;
+  padding: 42px 110px 47px;
+  line-height: 43px;
+  .title {
+    font-size: 36px;
+  }
+  .value {
+    font-size: 30px;
+    color: #b28a2a;
+  }
+}
+.shopInfo {
+  color: #c19b25;
+  margin-top: 76px;
+  .name {
+    font-size: 40px;
+    font-weight: bold;
+    font-stretch: normal;
+    line-height: 27px;
+  }
+  .tel,
+  .add {
     font-size: 36px;
   }
 }

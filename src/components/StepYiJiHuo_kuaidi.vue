@@ -4,7 +4,6 @@
     <div class="pageContent" v-if="cardInfo.getPresentWay === 'EXPRESS'">
       <div
         class="presentsOuter presentsOuterA STLiBian"
-        v-if="!cardInfo.express"
       >
         <div class="t1a">
           未发货，请稍等！
@@ -17,33 +16,6 @@
           本店收到配送要求后，24小时内发货<br />
           发货后可在此查询配送单号
         </div>
-      </div>
-      <div class="presentsOuter STLiBian" v-if="cardInfo.express">
-        <div>您的礼箱已经{{cardInfo.express.companyName === '跑腿配送' ? '提' : '发'}}货</div>
-        <div>提货方式：{{cardInfo.express.companyName}}</div>
-        <div>很荣幸为您提供服务</div>
-        <template v-if="cardInfo.express.companyName !== '跑腿配送'">
-          <div class="t1">
-            冷链物流单号
-          </div>
-          <div class="AvantGardeITCbyBT t2">
-            {{ cardInfo.express.expressNo }}
-          </div>
-          <div class="t3">本次配送单位：{{ cardInfo.express.companyName }}<br />每晚22点前更新物流信息</div>
-          <div class="t4" @click="copyHandler">
-            点我复制单号
-          </div>
-          <div class="t5">详细配送信息可在<br />物流官方网站进行查询</div>
-          <div class="t4" @click="gotoWeb">
-            进入物流官网
-          </div>
-          <div class="t4" @click="callPhone">
-            拨打物流客服电话
-          </div>
-        </template>
-        <template v-else>
-
-        </template>
       </div>
     </div>
     <div
@@ -60,6 +32,16 @@
         @click="chageStepIndexTpPerv"
       >
         返回
+      </div>
+
+      <div
+        :class="{
+          btn: true,
+          isValidated: true
+        }"
+        @click="clickCheckCardPresents"
+      >
+        卡内详情
       </div>
     </div>
   </div>
@@ -122,8 +104,10 @@ export default {
       }
     },
     chageStepIndexTpPerv() {
-      this.$store.commit("chageStepIndex", 1);
-      this.$store.commit("updateItem", { key: "currentCardNo", value: "" });
+      this.$store.commit("chageStepIndex", 0);
+    },
+    clickCheckCardPresents() {
+      this.$store.commit("chageStepIndex", '卡内详情');
     }
   },
   components: {

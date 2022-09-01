@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <template v-if="currentStepIndex === 6">
+    <template v-if="[6, '已销卡', '已激活快递'].includes(currentStepIndex)">
       <div class="itemContainer">
         <div
           :class="{
