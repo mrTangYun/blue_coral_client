@@ -212,6 +212,9 @@ export default {
             key: 'name',
             value: userName
           })
+        },
+        fail: error => {
+          alert(error.errMsg || JSON.stringify(error))
         }
       })
     },
