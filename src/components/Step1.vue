@@ -93,7 +93,7 @@ export default {
         .then(data => {
           this.isLoading = false
           if (data.data.getCodeInfo) {
-            this.appRoot.weixinJsConfigObject.set('cardId', data.data.getCodeInfo)
+            this.appRoot.weixinJsConfigObject.set('cardId', data.data.getCodeInfo.id)
             this.appRoot.weixinJsConfigObject.save()
             this.$store.commit("updateItem", {
               key: "cardInfo",
