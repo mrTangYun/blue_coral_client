@@ -214,7 +214,7 @@ export default {
             key: 'name',
             value: userName
           })
-          this.appRoot.weixinJsConfigObject.set('openAddressError', false)
+          this.appRoot.weixinJsConfigObject.set('address', JSON.stringify(res))
           this.appRoot.weixinJsConfigObject.save()
         },
         fail: error => {
