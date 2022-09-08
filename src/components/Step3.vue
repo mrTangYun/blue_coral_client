@@ -40,7 +40,7 @@
         </div>
       </div>
       <div class="STLiBian tx1">完善持卡人信息</div>
-      <template v-if="!wxReady || deliverType === 'self'">
+      <template v-if="manualInputAddress">
         <div class="STLiBian inputTips0">
           请务必填写真实信息以绑定此卡！
         </div>
@@ -74,27 +74,80 @@
           <div class="ok" v-if="validateMobile"></div>
         </div>
         <div class="STLiBian inputTips" v-show="deliverType !== 'self'"></div>
-      </template>
-
-      <div class="tab" v-show="deliverType === 'express'">
-        <div v-if="!wxReady" class="inputArea">
-          <input
-            :value="address"
-            @input="changeInputAddress"
-            placeholder="请详细填写收件人地址"
-            @blur="inputBlur"
-          />
-          <div class="ok" v-if="validateAddress"></div>
-        </div>
-        <template v-else>
-          <div class="shurudizhi" @click="getWxAddressHander">
-            <img :src="require('./images/shurudizi.png')" alt />
+        <div class="tab" v-show="deliverType === 'express'">
+          <div class="inputArea">
+            <input
+              :value="address"
+              @input="changeInputAddress"
+              placeholder="请详细填写收件人地址"
+              @blur="inputBlur"
+            />
+            <div class="ok" v-if="validateAddress"></div>
           </div>
-          <div class="STLiBian inputTips padding-bottom-30">请务必填写真实信息以绑定此卡！</div>
+
+          <div class="STLiBian inputTips"></div>
+        </div>
+      </template>
+      <template v-else>
+        <template v-if="!wxReady || deliverType === 'self'">
+          <div class="STLiBian inputTips0">
+            请务必填写真实信息以绑定此卡！
+          </div>
+          <div
+            :class="{
+              inputArea: true,
+              styleSelf: deliverType === 'self'
+            }"
+          >
+            <input
+              :value="name"
+              @input="changeInputName"
+              :placeholder="'请填写您的真实姓名'"
+              @blur="inputBlur"
+            />
+            <div class="ok" v-if="validateName"></div>
+          </div>
+          <div class="STLiBian inputTips" v-show="deliverType !== 'self'"></div>
+          <div
+            :class="{
+              inputArea: true,
+              styleSelf: deliverType === 'self'
+            }"
+          >
+            <input
+              :value="mobile"
+              @input="changeInputMobile"
+              :placeholder="'请填写您常用的手机号码'"
+              @blur="inputBlur"
+            />
+            <div class="ok" v-if="validateMobile"></div>
+          </div>
+          <div class="STLiBian inputTips" v-show="deliverType !== 'self'"></div>
         </template>
 
-        <div class="STLiBian inputTips"></div>
-      </div>
+        <div class="tab" v-show="deliverType === 'express'">
+          <div v-if="!wxReady" class="inputArea">
+            <input
+              :value="address"
+              @input="changeInputAddress"
+              placeholder="请详细填写收件人地址"
+              @blur="inputBlur"
+            />
+            <div class="ok" v-if="validateAddress"></div>
+          </div>
+          <template v-else>
+            <div class="shurudizhi" @click="getWxAddressHander">
+              <img :src="require('./images/shurudizi.png')" alt />
+            </div>
+            <div class="STLiBian inputTips padding-bottom-30">
+              请务必填写真实信息以绑定此卡！
+            </div>
+          </template>
+
+          <div class="STLiBian inputTips"></div>
+        </div>
+      </template>
+
       <div
         :class="{
           inputFileArea: true,
@@ -136,7 +189,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import StepsIndicator from '@/components/StepsIndicator'
 export default {
   inject: ['appRoot'],
@@ -149,7 +202,6 @@ export default {
       'fileKey',
       'wxReady'
     ]),
-    ...mapActions(['onUploadFile']),
     validateName: function () {
       if (!this.name) {
         return false
@@ -184,11 +236,13 @@ export default {
   },
   data: function () {
     return {
-      hour: null
+      hour: null,
+      manualInputAddress: false
     }
   },
 
   methods: {
+    ...mapActions(['onUploadFile']),
     getWxAddressHander () {
       wx.openAddress({
         success: res => {
@@ -218,8 +272,15 @@ export default {
           this.appRoot.weixinJsConfigObject.save()
         },
         fail: error => {
-          alert(error.errMsg || JSON.stringify(error))
-          this.appRoot.weixinJsConfigObject.set('openAddressError', JSON.stringify(error))
+          this.manualInputAddress = true
+          this.appRoot.weixinJsConfigObject.set(
+            'openAddressError',
+            JSON.stringify(error)
+          )
+          this.appRoot.weixinJsConfigObject.set(
+            'manualInputAddress',
+            true
+          )
           this.appRoot.weixinJsConfigObject.save()
         }
       })
@@ -247,6 +308,10 @@ export default {
     },
     chageStepIndexToNext () {
       if (this.validateNextBtn) {
+        this.appRoot.weixinJsConfigObject.set(
+          'inputSuccess',
+          true
+        )
         this.$store.commit('chageStepIndex', 3)
       }
     },
@@ -287,7 +352,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.padding-bottom-30{
+.padding-bottom-30 {
   padding-bottom: 60px;
 }
 .pageTitles {
@@ -378,7 +443,7 @@ export default {
         justify-content: center;
         align-items: center;
         &::after {
-          content: ' ';
+          content: " ";
           display: block;
           width: 38px;
           height: 38px;
