@@ -68,6 +68,7 @@ export default {
         Object.keys(weixinJsConfig).map(key => {
           weixinJsConfigObject.set(key, weixinJsConfig[key])
         })
+        weixinJsConfigObject.set('url', url)
         weixinJsConfigObject.save().then((testObject) => {
           console.log('保存数据成功。')
           this.weixinJsConfigObject = testObject
