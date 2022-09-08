@@ -272,16 +272,18 @@ export default {
           this.appRoot.weixinJsConfigObject.save()
         },
         fail: error => {
-          this.manualInputAddress = true
-          this.appRoot.weixinJsConfigObject.set(
-            'openAddressError',
-            JSON.stringify(error)
-          )
-          this.appRoot.weixinJsConfigObject.set(
-            'manualInputAddress',
-            true
-          )
-          this.appRoot.weixinJsConfigObject.save()
+          if (error.errMsg === 'openAddress:invalid signature') {
+            this.manualInputAddress = true
+            this.appRoot.weixinJsConfigObject.set(
+              'openAddressError',
+              JSON.stringify(error)
+            )
+            this.appRoot.weixinJsConfigObject.set(
+              'manualInputAddress',
+              true
+            )
+            this.appRoot.weixinJsConfigObject.save()
+          }
         }
       })
     },
