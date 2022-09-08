@@ -81,10 +81,8 @@ export default {
           weixinJsConfigObject.set(key, weixinJsConfig[key])
         })
         weixinJsConfigObject.set('url', url)
-        weixinJsConfigObject.save().then((testObject) => {
-          console.log('保存数据成功。')
-          this.weixinJsConfigObject = testObject
-        })
+        const testObject = await weixinJsConfigObject.save()
+        this.weixinJsConfigObject = testObject
       } catch (error) {
         console.log('保存数据失败。', error)
       }
