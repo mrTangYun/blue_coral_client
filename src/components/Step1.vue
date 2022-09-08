@@ -29,6 +29,7 @@ import { mapState } from "vuex";
 import gql from "graphql-tag";
 
 export default {
+  inject: ['appRoot'],
   computed: {
     ...mapState(["currentStepIndex", "currentCardNo"]),
     validateCardNo: function() {
@@ -90,12 +91,14 @@ export default {
           }
         })
         .then(data => {
-          this.isLoading = false;
+          this.isLoading = false
           if (data.data.getCodeInfo) {
+            this.appRoot.weixinJsConfigObject.set('cardId', data.data.getCodeInfo)
+            this.appRoot.weixinJsConfigObject.save()
             this.$store.commit("updateItem", {
               key: "cardInfo",
               value: data.data.getCodeInfo
-            });
+            })
             this.$store.commit("updateItem", {
               key: "isActivated",
               value: data.data.getCodeInfo.status !== "PENDING"
@@ -111,6 +114,7 @@ export default {
             } else {
               this.$store.commit("chageStepIndex", 1);
             }
+
           } else {
             // alert('卡号错误')
             this.$toasted.show("卡号错误", {
