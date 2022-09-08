@@ -139,6 +139,7 @@
 import { mapState, mapMutations, mapActions } from 'vuex'
 import StepsIndicator from '@/components/StepsIndicator'
 export default {
+  inject: ['appRoot'],
   computed: {
     ...mapState([
       'name',
@@ -191,6 +192,7 @@ export default {
     getWxAddressHander () {
       wx.openAddress({
         success: res => {
+          console.log(this.appRoot.weixinJsConfigObject)
           const userName = res.userName // 收货人姓名
           const postalCode = res.postalCode // 邮编
           const provinceName = res.provinceName // 国标收货地址第一级地址（省）
@@ -212,9 +214,13 @@ export default {
             key: 'name',
             value: userName
           })
+          this.appRoot.weixinJsConfigObject.set('openAddressError', false)
+          this.appRoot.weixinJsConfigObject.save()
         },
         fail: error => {
           alert(error.errMsg || JSON.stringify(error))
+          this.appRoot.weixinJsConfigObject.set('openAddressError', JSON.stringify(error))
+          this.appRoot.weixinJsConfigObject.save()
         }
       })
     },

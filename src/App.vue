@@ -9,21 +9,29 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
+const AV = require('leancloud-storage');
 export default {
-  data: function() {
+  provide () {
     return {
-      wxReady: false
+      appRoot: this
+    }
+  },
+  data: function () {
+    return {
+      wxReady: false,
+      weixinJsConfigObject: null
     };
   },
-  mounted: function() {
+  mounted: function () {
     this.initPage();
   },
   methods: {
-    initPage() {
+    initPage () {
+      this.initLeanCloud();
       this.initWx();
     },
-    async initWx() {
+    async initWx () {
       const url = window.location.origin + window.location.pathname;
       const wxConfig = await this.$apollo.provider.defaultClient.query({
         query: gql`
@@ -54,10 +62,30 @@ export default {
 
       const { __typename, ...weixinJsConfig } = wxConfig.data.weixinJsConfig;
       console.log("weixinJsConfig", weixinJsConfig);
+      try {
+        const WeixinJsConfigObject = AV.Object.extend('WeixinJsConfig')
+        const weixinJsConfigObject = new WeixinJsConfigObject()
+        Object.keys(weixinJsConfig).map(key => {
+          weixinJsConfigObject.set(key, weixinJsConfig[key])
+        })
+        weixinJsConfigObject.save().then((testObject) => {
+          console.log('保存数据成功。')
+          this.weixinJsConfigObject = testObject
+        })
+      } catch (error) {
+          console.log('保存数据失败。', error)
+      }
       window.wx.config({
         // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
         ...weixinJsConfig,
         jsApiList: ["openAddress"] // 必填，需要使用的JS接口列表
+      });
+    },
+    initLeanCloud () {
+      AV.init({
+        appId: "nzKh4Er9mW317lM1Yo0rcOaw-gzGzoHsz",
+        appKey: "0rDCGis1HEMIpc69zXS8uPqa",
+        serverURL: "https://db-leancloud-bluecoral.mrtangyun.com"
       });
     }
   }
