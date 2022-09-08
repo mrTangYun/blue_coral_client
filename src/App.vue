@@ -1,16 +1,12 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>-->
     <router-view />
   </div>
 </template>
 
 <script>
-import gql from 'graphql-tag';
-const AV = require('leancloud-storage');
+import gql from 'graphql-tag'
+const AV = require('leancloud-storage')
 export default {
   provide () {
     return {
@@ -21,18 +17,18 @@ export default {
     return {
       wxReady: false,
       weixinJsConfigObject: null
-    };
+    }
   },
   mounted: function () {
-    this.initPage();
+    this.initPage()
   },
   methods: {
     initPage () {
-      this.initLeanCloud();
-      this.initWx();
+      this.initLeanCloud()
+      this.initWx()
     },
     async initWx () {
-      const url = window.location.origin + window.location.pathname;
+      const url = window.location.origin + window.location.pathname
       const wxConfig = await this.$apollo.provider.defaultClient.query({
         query: gql`
           query weixinJsConfig($url: String!) {
@@ -47,21 +43,37 @@ export default {
         variables: {
           url
         }
-      });
+      })
       window.wx.ready(() => {
         // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
         // console.log("ready---------------");
-        this.wxReady = true;
-        this.$store.commit('updateItem', { key: 'wxReady', value: true })
-      });
-      window.wx.error(function(res) {
-        console.log("res------", res);
-        alert('错误：' + res.errMsg);
+        window.wx.checkJsApi({
+          jsApiList: ['openAddress'], // 需要检测的 JS 接口列表，所有 JS 接口列表见附录2,
+          success: (res) => {
+            // 以键值对的形式返回，可用的 api 值true，不可用为false
+            // 如：{"checkResult":{"openAddress":true},"errMsg":"checkJsApi:ok"}
+            if (this.weixinJsConfigObject) {
+              this.weixinJsConfigObject.set('checkJsApiResult', res)
+              this.weixinJsConfigObject.save()
+            }
+            if (res.checkResult.openAddress) {
+              this.wxReady = true
+              this.$store.commit('updateItem', { key: 'wxReady', value: true })
+            }
+          }
+        })
+      })
+      window.wx.error(function (res) {
+        console.log('res------', res)
+        if (this.weixinJsConfigObject) {
+          this.weixinJsConfigObject.set('wxError', res)
+          this.weixinJsConfigObject.save()
+        }
         // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-      });
+      })
 
-      const { __typename, ...weixinJsConfig } = wxConfig.data.weixinJsConfig;
-      console.log("weixinJsConfig", weixinJsConfig);
+      const { __typename, ...weixinJsConfig } = wxConfig.data.weixinJsConfig
+      console.log('weixinJsConfig', weixinJsConfig)
       try {
         const WeixinJsConfigObject = AV.Object.extend('WeixinJsConfig')
         const weixinJsConfigObject = new WeixinJsConfigObject()
@@ -74,23 +86,23 @@ export default {
           this.weixinJsConfigObject = testObject
         })
       } catch (error) {
-          console.log('保存数据失败。', error)
+        console.log('保存数据失败。', error)
       }
       window.wx.config({
         // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
         ...weixinJsConfig,
-        jsApiList: ["openAddress"] // 必填，需要使用的JS接口列表
-      });
+        jsApiList: ['openAddress'] // 必填，需要使用的JS接口列表
+      })
     },
     initLeanCloud () {
       AV.init({
-        appId: "nzKh4Er9mW317lM1Yo0rcOaw-gzGzoHsz",
-        appKey: "0rDCGis1HEMIpc69zXS8uPqa",
-        serverURL: "https://db-leancloud-bluecoral.mrtangyun.com"
-      });
+        appId: 'nzKh4Er9mW317lM1Yo0rcOaw-gzGzoHsz',
+        appKey: '0rDCGis1HEMIpc69zXS8uPqa',
+        serverURL: 'https://db-leancloud-bluecoral.mrtangyun.com'
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="scss">
