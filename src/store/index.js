@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import axios from "axios";
+import axios from 'axios'
 import gql from 'graphql-tag'
 
 Vue.use(Vuex)
@@ -29,34 +29,35 @@ export default new Vuex.Store({
   },
   mutations: {
     /// 更改当前步骤索引
-    chageStepIndex(state, index) {
+    chageStepIndex (state, index) {
       state.currentStepIndex = index
     },
     /// 更改当前卡号
-    updateCurrentCardNo(state, no) {
+    updateCurrentCardNo (state, no) {
       state.currentCardNo = no.toUpperCase()
     },
     /// 更改值
-    updateItem(state, { key, value }) {
+    updateItem (state, { key, value }) {
       state[key] = value
     }
   },
 
   actions: {
-    onUploadFile(context, {
+    onUploadFile (context, {
       apolloClient,
       file
     }) {
-      context.commit("updateItem", {
-        key: "fileKey",
+      context.commit('updateItem', {
+        key: 'fileKey',
         value: null
-      });
-      context.commit("updateItem", {
-        key: "updateUploadProgress",
+      })
+      context.commit('updateItem', {
+        key: 'updateUploadProgress',
         value: file ? 0 : -1
-      });
-      apolloClient.query({
-        query: gql`
+      })
+      return new Promise((resolve, reject) => {
+        apolloClient.query({
+          query: gql`
           query qiniu {
             uploadToken{
               key
@@ -64,60 +65,59 @@ export default new Vuex.Store({
             }
           }
           `,
-        fetchPolicy: 'network-only'
-      }).then(response => {
-        const {
-          key,
-          token,
-          upload_url = "https://up-z0.qiniup.com"
-        } = response.data.uploadToken;
-        let data = new FormData();
-        data.append("key", key);
-        data.append("token", token);
-        data.append("file", file);
-        axios({
-          method: "POST",
-          url: upload_url,
-          data: data,
-          onUploadProgress: (progressEvent) => {
-            var percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            );
-            console.log(percentCompleted);
-            context.commit("updateItem", {
-              key: "updateUploadProgress",
-              value: percentCompleted
-            });
-          },
+          fetchPolicy: 'network-only'
+        }).then(response => {
+          const {
+            key,
+            token,
+            uploadUrl = 'https://up-z0.qiniup.com'
+          } = response.data.uploadToken
+          const data = new FormData()
+          data.append('key', key)
+          data.append('token', token)
+          data.append('file', file)
+          axios({
+            method: 'POST',
+            url: uploadUrl,
+            data: data,
+            onUploadProgress: (progressEvent) => {
+              var percentCompleted = Math.round(
+                (progressEvent.loaded * 100) / progressEvent.total
+              )
+              console.log(percentCompleted)
+              context.commit('updateItem', {
+                key: 'updateUploadProgress',
+                value: percentCompleted
+              })
+            }
+          })
+            .then((res) => {
+              console.log('上传完毕')
+              context.commit('updateItem', {
+                key: 'fileKey',
+                value: key
+              })
+              context.commit('updateItem', {
+                key: 'updateUploadProgress',
+                value: 100
+              })
+              resolve(key)
+            })
+            .catch((err) => {
+              console.log('err ', err)
+              context.commit('updateItem', {
+                key: 'fileKey',
+                value: null
+              })
+              context.commit('updateItem', {
+                key: 'updateUploadProgress',
+                value: -1
+              })
+              reject(err)
+            })
         })
-          .then((res) => {
-            console.log('上传完毕');
-            context.commit("updateItem", {
-              key: "fileKey",
-              value: key
-            });
-            context.commit("updateItem", {
-              key: "updateUploadProgress",
-              value: 100
-            });
-           })
-          .catch((err) => {
-            console.log("err " + type, err);
-            
-            context.commit("updateItem", {
-              key: "fileKey",
-              value: null
-            });
-            context.commit("updateItem", {
-              key: "updateUploadProgress",
-              value: -1
-            });
-          });
-      }).catch(e => {
-
-      });
-      return;
-    },
+      })
+    }
   },
   modules: {
   }

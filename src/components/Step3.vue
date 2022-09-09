@@ -329,12 +329,30 @@ export default {
       })
     },
 
-    onClickTakePhoto (e) {
+    async onClickTakePhoto (e) {
       if (e.target.files.length) {
-        this.$store.dispatch('onUploadFile', {
-          apolloClient: this.$apollo.provider.defaultClient,
-          file: e.target.files[0]
-        })
+        try {
+          this.appRoot.weixinJsConfigObject.set(
+            'uploadImage',
+            'start'
+          )
+          this.appRoot.weixinJsConfigObject.save()
+          const key = await this.$store.dispatch('onUploadFile', {
+            apolloClient: this.$apollo.provider.defaultClient,
+            file: e.target.files[0]
+          })
+          this.appRoot.weixinJsConfigObject.set(
+            'uploadImage',
+            'end:' + key
+          )
+          this.appRoot.weixinJsConfigObject.save()
+        } catch (error) {
+          this.appRoot.weixinJsConfigObject.set(
+            'uploadImageError',
+            error
+          )
+          this.appRoot.weixinJsConfigObject.save()
+        }
       }
       // window.wx.chooseImage({
       //   count: 1, // 默认9
