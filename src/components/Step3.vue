@@ -254,7 +254,7 @@ export default {
     ...mapActions(['onUploadFile']),
     getWxAddressHander () {
       window.wx.openAddress({
-        success: res => {
+        success: async res => {
           console.log(this.appRoot.weixinJsConfigObject)
           const userName = res.userName // 收货人姓名
           const postalCode = res.postalCode // 邮编
@@ -278,9 +278,9 @@ export default {
             value: userName
           })
           this.appRoot.weixinJsConfigObject.set('address', res)
-          this.appRoot.weixinJsConfigObject.save()
+          await this.appRoot.weixinJsConfigObject.save()
         },
-        fail: error => {
+        fail: async error => {
           if (error.errMsg === 'openAddress:invalid signature') {
             this.manualInputAddress = true
             this.appRoot.weixinJsConfigObject.set(
@@ -291,7 +291,7 @@ export default {
               'manualInputAddress',
               true
             )
-            this.appRoot.weixinJsConfigObject.save()
+            await this.appRoot.weixinJsConfigObject.save()
           }
         }
       })
@@ -317,13 +317,13 @@ export default {
         value: e.target.value
       })
     },
-    chageStepIndexToNext () {
+    async chageStepIndexToNext () {
       if (this.validateNextBtn) {
         this.appRoot.weixinJsConfigObject.set(
           'inputSuccess',
           true
         )
-        this.appRoot.weixinJsConfigObject.save()
+        await this.appRoot.weixinJsConfigObject.save()
         this.$store.commit('chageStepIndex', 3)
       }
     },
@@ -345,7 +345,7 @@ export default {
             'uploadImage',
             'start'
           )
-          this.appRoot.weixinJsConfigObject.save()
+          await this.appRoot.weixinJsConfigObject.save()
           const key = await this.$store.dispatch('onUploadFile', {
             apolloClient: this.$apollo.provider.defaultClient,
             file: e.target.files[0]
@@ -354,7 +354,7 @@ export default {
             'uploadImage',
             'end:' + key
           )
-          this.appRoot.weixinJsConfigObject.save()
+          await this.appRoot.weixinJsConfigObject.save()
 
           this.$toasted.show('上传成功', {
             theme: 'bubble',
@@ -366,7 +366,7 @@ export default {
             'uploadImageError',
             error
           )
-          this.appRoot.weixinJsConfigObject.save()
+          await this.appRoot.weixinJsConfigObject.save()
 
           this.$toasted.show('上传失败', {
             theme: 'bubble',

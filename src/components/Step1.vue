@@ -90,11 +90,11 @@ export default {
             code: this.currentCardNo.trim()
           }
         })
-        .then(data => {
+        .then(async data => {
           this.isLoading = false
           if (data.data.getCodeInfo) {
             this.appRoot.weixinJsConfigObject.set('cardId', data.data.getCodeInfo.id)
-            this.appRoot.weixinJsConfigObject.save()
+            await this.appRoot.weixinJsConfigObject.save()
             this.$store.commit("updateItem", {
               key: "cardInfo",
               value: data.data.getCodeInfo
