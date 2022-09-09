@@ -173,6 +173,7 @@
     <div class="STLiBian txt3" v-show="deliverType === 'self'">
       重要提示：来店自提，请务必携带此卡！
     </div>
+
     <div class="btns btns_row">
       <div class="btn isValidated" @click="chageStepIndexTpPerv">上一步</div>
       <div
@@ -182,7 +183,7 @@
         }"
         @click="chageStepIndexToNext"
       >
-        下一步
+        {{ nextBtnStr }}
       </div>
     </div>
   </div>
@@ -200,7 +201,8 @@ export default {
       'address',
       'deliverType',
       'fileKey',
-      'wxReady'
+      'wxReady',
+      'updateUploadProgress'
     ]),
     validateName: function () {
       if (!this.name) {
@@ -232,6 +234,13 @@ export default {
         }
       }
       return false
+    },
+    nextBtnStr: function () {
+      if (this.updateUploadProgress >= 0 && this.updateUploadProgress < 100) {
+        return '正在上传'
+      } else {
+        return '下一步'
+      }
     }
   },
   data: function () {
@@ -244,7 +253,7 @@ export default {
   methods: {
     ...mapActions(['onUploadFile']),
     getWxAddressHander () {
-      wx.openAddress({
+      window.wx.openAddress({
         success: res => {
           console.log(this.appRoot.weixinJsConfigObject)
           const userName = res.userName // 收货人姓名
@@ -346,12 +355,24 @@ export default {
             'end:' + key
           )
           this.appRoot.weixinJsConfigObject.save()
+
+          this.$toasted.show('上传成功', {
+            theme: 'bubble',
+            position: 'top-center',
+            duration: 3000
+          })
         } catch (error) {
           this.appRoot.weixinJsConfigObject.set(
             'uploadImageError',
             error
           )
           this.appRoot.weixinJsConfigObject.save()
+
+          this.$toasted.show('上传失败', {
+            theme: 'bubble',
+            position: 'top-center',
+            duration: 3000
+          })
         }
       }
       // window.wx.chooseImage({
