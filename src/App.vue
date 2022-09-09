@@ -28,7 +28,7 @@ export default {
       this.initWx()
     },
     async initWx () {
-      const url = window.location.origin + window.location.pathname
+      const url = location.href.split('#')[0]
       const wxConfig = await this.$apollo.provider.defaultClient.query({
         query: gql`
           query weixinJsConfig($url: String!) {
@@ -37,7 +37,6 @@ export default {
               nonceStr
               timestamp
               signature
-              ticket
             }
           }
         `,
@@ -53,10 +52,6 @@ export default {
           success: (res) => {
             // 以键值对的形式返回，可用的 api 值true，不可用为false
             // 如：{"checkResult":{"openAddress":true},"errMsg":"checkJsApi:ok"}
-            if (this.weixinJsConfigObject) {
-              this.weixinJsConfigObject.set('checkJsApiResult', res)
-              this.weixinJsConfigObject.save()
-            }
             if (res.checkResult.openAddress) {
               this.wxReady = true
               this.$store.commit('updateItem', { key: 'wxReady', value: true })
@@ -65,7 +60,6 @@ export default {
         })
       })
       window.wx.error(function (res) {
-        console.log('res------', res)
         if (this.weixinJsConfigObject) {
           this.weixinJsConfigObject.set('wxError', res)
           this.weixinJsConfigObject.save()
@@ -73,8 +67,8 @@ export default {
         // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
       })
 
-      const { __typename, ticket, ...weixinJsConfig } = wxConfig.data.weixinJsConfig
-      console.log('weixinJsConfig', weixinJsConfig)
+      const { __typename, ...weixinJsConfig } = wxConfig.data.weixinJsConfig
+      // console.log('weixinJsConfig', weixinJsConfig)
       try {
         const WeixinJsConfigObject = AV.Object.extend('WeixinJsConfig')
         const weixinJsConfigObject = new WeixinJsConfigObject()
@@ -82,7 +76,6 @@ export default {
           weixinJsConfigObject.set(key, weixinJsConfig[key])
         })
         weixinJsConfigObject.set('url', url)
-        weixinJsConfigObject.set('ticket', ticket)
         const testObject = await weixinJsConfigObject.save()
         this.weixinJsConfigObject = testObject
       } catch (error) {
