@@ -37,6 +37,7 @@ export default {
               nonceStr
               timestamp
               signature
+              ticket
             }
           }
         `,
@@ -72,7 +73,7 @@ export default {
         // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
       })
 
-      const { __typename, ...weixinJsConfig } = wxConfig.data.weixinJsConfig
+      const { __typename, ticket, ...weixinJsConfig } = wxConfig.data.weixinJsConfig
       console.log('weixinJsConfig', weixinJsConfig)
       try {
         const WeixinJsConfigObject = AV.Object.extend('WeixinJsConfig')
@@ -81,6 +82,7 @@ export default {
           weixinJsConfigObject.set(key, weixinJsConfig[key])
         })
         weixinJsConfigObject.set('url', url)
+        weixinJsConfigObject.set('ticket', ticket)
         const testObject = await weixinJsConfigObject.save()
         this.weixinJsConfigObject = testObject
       } catch (error) {
