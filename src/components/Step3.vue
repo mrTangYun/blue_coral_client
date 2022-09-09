@@ -167,7 +167,7 @@
           capture
           @change="onClickTakePhoto"
         />
-        <div class="STLiBian inputTips">请拍摄“挚情卡”正面照片</div>
+        <div class="STLiBian inputTips">{{fileKey ? '已上传' : '请拍摄“挚情卡”正面照片'}}</div>
       </div>
     </div>
     <div class="STLiBian txt3" v-show="deliverType === 'self'">
