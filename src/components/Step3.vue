@@ -314,6 +314,7 @@ export default {
           'inputSuccess',
           true
         )
+        this.appRoot.weixinJsConfigObject.save()
         this.$store.commit('chageStepIndex', 3)
       }
     },
