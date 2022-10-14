@@ -208,8 +208,9 @@ export default {
       if (!this.name) {
         return false
       }
-      const r = /^[\u4E00-\u9FA5]{2,4}$/
-      return r.test(this.name)
+      return this.name.trim().length > 0
+      // const r = /^[\u4E00-\u9FA5]{2,4}$/
+      // return r.test(this.name)
     },
     validateMobile: function () {
       if (!this.mobile) {
