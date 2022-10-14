@@ -28,7 +28,7 @@ export default {
       this.initWx()
     },
     async initWx () {
-      const url = window.location.origin + window.location.pathname
+      const url = location.href.split('#')[0]
       const wxConfig = await this.$apollo.provider.defaultClient.query({
         query: gql`
           query weixinJsConfig($url: String!) {
@@ -48,13 +48,12 @@ export default {
         // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
         // console.log("ready---------------");
         window.wx.checkJsApi({
-          jsApiList: ['openAddress'], // 需要检测的 JS 接口列表，所有 JS 接口列表见附录2,
+          jsApiList: ['openAddress', 'hideAllNonBaseMenuItem'], // 需要检测的 JS 接口列表，所有 JS 接口列表见附录2,
           success: (res) => {
             // 以键值对的形式返回，可用的 api 值true，不可用为false
             // 如：{"checkResult":{"openAddress":true},"errMsg":"checkJsApi:ok"}
-            if (this.weixinJsConfigObject) {
-              this.weixinJsConfigObject.set('checkJsApiResult', res)
-              this.weixinJsConfigObject.save()
+            if (res.checkResult.hideAllNonBaseMenuItem) {
+              window.wx.hideAllNonBaseMenuItem()
             }
             if (res.checkResult.openAddress) {
               this.wxReady = true
@@ -64,7 +63,6 @@ export default {
         })
       })
       window.wx.error(function (res) {
-        console.log('res------', res)
         if (this.weixinJsConfigObject) {
           this.weixinJsConfigObject.set('wxError', res)
           this.weixinJsConfigObject.save()
@@ -73,7 +71,7 @@ export default {
       })
 
       const { __typename, ...weixinJsConfig } = wxConfig.data.weixinJsConfig
-      console.log('weixinJsConfig', weixinJsConfig)
+      // console.log('weixinJsConfig', weixinJsConfig)
       try {
         const WeixinJsConfigObject = AV.Object.extend('WeixinJsConfig')
         const weixinJsConfigObject = new WeixinJsConfigObject()
@@ -89,7 +87,7 @@ export default {
       window.wx.config({
         // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
         ...weixinJsConfig,
-        jsApiList: ['openAddress'] // 必填，需要使用的JS接口列表
+        jsApiList: ['openAddress', 'hideAllNonBaseMenuItem'] // 必填，需要使用的JS接口列表
       })
     },
     initLeanCloud () {
