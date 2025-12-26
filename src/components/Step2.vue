@@ -89,6 +89,10 @@ export default {
   computed: {
     ...mapState(["isActivated", "cardInfo"]),
     presents: function() {
+      // return new Array(50).fill(0).map((item,index) => ({
+      //     title: index,
+      //     unit: index + 't'
+      //   }))
       return this.cardInfo.giftPackage.Commdities.map(
         ({ detail: { title }, count, unit }) => ({
           title,
@@ -149,7 +153,20 @@ export default {
     border-radius: 8px;
     border: solid 2px #c7c7c7;
     padding: 24px 35px;
-    overflow-y: scroll;
+    overflow-y: auto;
+    
+    /* 自定义滚动条样式，防止自动隐藏 */
+    &::-webkit-scrollbar {
+      width: 6px;
+      display: block;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #c7c7c7; /*与边框颜色一致*/
+      border-radius: 3px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
     .item {
       margin: 15px 0;
       display: flex;

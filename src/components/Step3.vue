@@ -139,8 +139,8 @@
             <div class="shurudizhi" @click="getWxAddressHander">
               <img :src="require('./images/shurudizi.png')" alt />
             </div>
-            <div class="STLiBian inputTips padding-bottom-30">
-              请务必填写真实信息以绑定此卡！
+            <div class="STLiBian inputTips padding-bottom-30" :style="[ address ? {color: '#74bc2d'}: {}]">
+             {{ address ? '已填写！' : '请务必填写真实信息以绑定此卡！'}}  
             </div>
           </template>
 
