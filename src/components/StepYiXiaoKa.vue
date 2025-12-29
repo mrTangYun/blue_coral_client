@@ -53,6 +53,13 @@
             <div class="AvantGardeITCbyBT value">
               {{ cardInfo.bindInfo.mobile.replace(/(?=(\d{4})+$)/g, " ") }}
             </div>
+            
+            <template v-if="cardInfo.bindInfo.address">
+              <div class="STLiBian title">收货地址</div>
+              <div class="AvantGardeITCbyBT value">
+                {{  cardInfo.bindInfo.address }}
+              </div>
+            </template>
             <!-- <template v-if="deliverType === 'express'">
               <div class="STLiBian title">收货地址</div>
               <div class="value">{{ address }}</div>

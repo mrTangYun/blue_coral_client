@@ -39,7 +39,7 @@
           />
         </div>
       </div>
-      <div class="STLiBian inputTips0" v-if="deliverType === 'express'">如需山东省外发货请致电15853179393</div>
+      <div class="STLiBian inputTips0" v-if="deliverType === 'express'">如需山东省外发货请致电<span class="AvantGardeITCbyBT">15853179393</span></div>
       <div class="STLiBian tx1">完善持卡人信息</div>
       <template v-if="manualInputAddress">
         <div class="STLiBian inputTips0">
