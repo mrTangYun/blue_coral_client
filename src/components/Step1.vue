@@ -82,6 +82,7 @@ export default {
                   id
                   name
                   mobile
+                  address
                 }
               }
             }

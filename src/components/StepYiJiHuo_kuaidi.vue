@@ -2,8 +2,17 @@
   <div class="pageContainer">
     <StepsIndicator />
     <div class="pageContent" v-if="cardInfo.getPresentWay === 'EXPRESS'">
+      <div class="myInfo">
+        <div class="STLiBian title">收货人</div>
+        <div class="value">{{ cardInfo.bindInfo.name }}</div>
+        <div class="STLiBian title">收货电话</div>
+        <div class="AvantGardeITCbyBT value">{{ cardInfo.bindInfo.mobile.replace(/(?=(\d{4})+$)/g, ' ') }}</div>
+        <div class="STLiBian title">收货地址</div>
+        <div class="AvantGardeITCbyBT value">{{ cardInfo.bindInfo.address }}</div>
+      </div>
       <div
         class="presentsOuter presentsOuterA STLiBian"
+         v-if="!cardInfo.express"
       >
         <div class="t1a">
           未发货，请稍等！
@@ -17,6 +26,42 @@
           发货后可在此查询配送单号
         </div>
       </div>
+      <template v-if="cardInfo.express">
+        
+      
+        <div
+          class="presentsOuter presentsOuterA STLiBian" v-if="cardInfo.express"
+        >
+          <!-- <div class="t1a">
+            您的礼箱已经{{cardInfo.express.companyName === '跑腿配送' ? '提' : '发'}}货
+          </div> -->
+          <div class="t2a">
+            提货方式：{{cardInfo.express.companyName}}
+          </div>
+          <template v-if="cardInfo.express.companyName !== '跑腿配送'">
+            <div class="t1">
+              冷链物流单号
+            </div>
+            <div class="AvantGardeITCbyBT t2">
+              {{ cardInfo.express.expressNo }}
+            </div>
+            <!-- <div class="t3">本次配送单位：{{ cardInfo.express.companyName }}<br />每晚22点前更新物流信息</div> -->
+            <div class="t4" @click="copyHandler">
+              点我复制单号
+            </div>
+            <div class="t5">详细配送信息可在<br />物流官方网站进行查询</div>
+            <div class="t4" @click="gotoWeb">
+              进入物流官网
+            </div>
+            <div class="t4" @click="callPhone">
+              拨打物流客服电话
+            </div>
+          </template>
+        </div>
+      </template>
+    
+      
+      <div style="flex: 1"></div>
     </div>
     <div
       :class="{
@@ -131,9 +176,9 @@ $red: #dc2123;
 .pageContent {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 .presentsOuter {
-  flex: 1;
   position: relative;
   padding: 0 87px;
   &.presentsOuterA {
@@ -192,4 +237,84 @@ $red: #dc2123;
     font-size: 36px;
   }
 }
+.myInfo {
+  width: 380px;
+  margin: 0 auto;
+  background-image: linear-gradient(#f6f6f6, #f6f6f6),
+    linear-gradient(#2f4f7e, #2f4f7e);
+  background-blend-mode: normal, normal;
+  border-radius: 15px;
+  border: solid 6px #c4a23d;
+  color: #dc2123;
+  padding: 22px 110px 27px;
+  line-height: 43px;
+  .title {
+    font-size: 36px;
+  }
+  .value {
+    font-size: 30px;
+    color: #b28a2a;
+  }
+}
+
+.pageContent2 {
+  position: relative;
+  &.presentsOuterA {
+    padding: 0 125px;
+  }
+  .t1 {
+    color: #c19b25;
+    font-size: 48px;
+    font-weight: bold;
+  }
+  .t2 {
+    color: #c19b25;
+    font-size: 30px;
+    height: 80px;
+    line-height: 80px;
+    background-image: linear-gradient(#ffffff, #ffffff),
+      linear-gradient(#2f4f7e, #2f4f7e);
+    background-blend-mode: normal, normal;
+    border-radius: 15px;
+    border: solid 5px #435f84;
+    margin: 37px auto 22px;
+  }
+  .t3 {
+    color: $red;
+    font-size: 36px;
+    margin-bottom: 34px;
+  }
+  .t4 {
+    color: #fff;
+    font-size: 48px;
+    margin-bottom: 34px;
+    height: 80px;
+    line-height: 80px;
+    background-image: linear-gradient(#3c5b87, #3c5b87),
+      linear-gradient(#2f4f7e, #2f4f7e);
+    background-blend-mode: normal, normal;
+    border-radius: 15px;
+  }
+  .t5 {
+    color: #c19b25;
+    font-size: 36px;
+    margin-bottom: 52px;
+  }
+  .t1a {
+    color: $red;
+    font-size: 50px;
+    margin-top: 67px;
+    margin-bottom: 67px;
+  }
+  .t2a {
+    color: $red;
+    font-size: 50px;
+  }
+  .t3a {
+    color: $red;
+    font-size: 36px;
+  }
+}
 </style>
+
+

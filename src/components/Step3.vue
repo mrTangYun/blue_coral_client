@@ -39,6 +39,7 @@
           />
         </div>
       </div>
+      <div class="STLiBian inputTips0" v-if="deliverType === 'express'">如需山东省外发货请致电15853179393</div>
       <div class="STLiBian tx1">完善持卡人信息</div>
       <template v-if="manualInputAddress">
         <div class="STLiBian inputTips0">
@@ -130,7 +131,7 @@
             <input
               :value="address"
               @input="changeInputAddress"
-              placeholder="请详细填写收件人地址"
+              placeholder="请务必填写收货人具体单元楼号信息！"
               @blur="inputBlur"
             />
             <div class="ok" v-if="validateAddress"></div>
@@ -140,7 +141,7 @@
               <img :src="require('./images/shurudizi.png')" alt />
             </div>
             <div class="STLiBian inputTips padding-bottom-30" :style="[ address ? {color: '#74bc2d'}: {}]">
-             {{ address ? '已填写！' : '请务必填写真实信息以绑定此卡！'}}  
+             {{ address ? '已填写！' : '请务必填写收货人具体单元楼号信息！'}}  
             </div>
           </template>
 
@@ -167,7 +168,7 @@
           capture
           @change="onClickTakePhoto"
         />
-        <div class="STLiBian inputTips">{{fileKey ? '已上传' : '请拍摄“挚情卡”正面照片'}}</div>
+        <div class="STLiBian inputTips">{{fileKey ? '已上传' : '请拍摄“挚情卡”带卡号面照片'}}</div>
       </div>
     </div>
     <div class="STLiBian txt3" v-show="deliverType === 'self'">
